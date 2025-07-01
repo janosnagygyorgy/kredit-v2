@@ -57,6 +57,10 @@ function Home() {
           </li>
         ))}
       </ul>
+      <div>
+        Kreditek száma:
+        {subjects.reduce((acc, curr) => acc + curr.credit, 0)}
+      </div>
     </>
   );
 }
