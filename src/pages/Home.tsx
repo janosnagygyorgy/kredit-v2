@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { v4 } from "uuid";
 import type { Subject } from "../interfaces/subject";
 import type CalculatorService from "../services/CalculatorService";
-import SubjectListItem from "../components/SubjectListItem";
+import SubjectList from "../components/SubjectList";
+import StatisticsDisplay from "../components/StatisticsDisplay";
 
 interface HomeProps {
   calculatorService: CalculatorService;
@@ -10,21 +10,10 @@ interface HomeProps {
 
 function Home({ calculatorService }: HomeProps) {
   const [subjects, setSubjects] = useState<Subject[]>([]);
-  const [inputCompleted, setInputCompleted] = useState(false);
-  const [inputName, setInputName] = useState("");
-  const [inputCredit, setInputCredit] = useState("3");
-  const [inputGrade, setInputGrade] = useState("5");
   calculatorService.load(subjects);
 
-  function addSubject() {
-    const newSubject: Subject = {
-      id: v4(),
-      completed: inputCompleted,
-      name: inputName,
-      credit: Number(inputCredit),
-      grade: Number(inputGrade),
-    };
-    setSubjects((s) => [newSubject, ...s]);
+  function addSubject(subject: Subject) {
+    setSubjects((s) => [subject, ...s]);
   }
 
   function updateSubject(subjectId: string, subject: Subject) {
@@ -44,44 +33,13 @@ function Home({ calculatorService }: HomeProps) {
   return (
     <>
       <h1>Kreditindex kalkulátor</h1>
-      <ul>
-        <li>
-          <input
-            type="checkbox"
-            checked={inputCompleted}
-            onChange={(event) => setInputCompleted(event.target.checked)}
-          />
-          <input
-            type="text"
-            value={inputName}
-            onChange={(event) => setInputName(event.target.value)}
-          />
-          <input
-            type="number"
-            min={0}
-            value={inputCredit}
-            onChange={(event) => setInputCredit(event.target.value)}
-          />
-          <input
-            type="number"
-            min={1}
-            max={5}
-            value={inputGrade}
-            onChange={(event) => setInputGrade(event.target.value)}
-          />
-          <input type="button" value="Add" onClick={addSubject} />
-        </li>
-        {subjects.map((subject) => (
-          <li key={subject.id}>
-            <SubjectListItem
-              subject={subject}
-              onUpdateSubject={updateSubject}
-              onDeleteSubject={deleteSubject}
-            />
-          </li>
-        ))}
-      </ul>
-      <div>Kreditek összege: {calculatorService.creditSum().toString()}</div>
+      <SubjectList
+        subjects={subjects}
+        onAddSubject={addSubject}
+        onUpdateSubject={updateSubject}
+        onDeleteSubject={deleteSubject}
+      />
+      <StatisticsDisplay calculatorService={calculatorService} />
     </>
   );
 }
