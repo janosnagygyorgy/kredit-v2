@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Subject } from "../interfaces/subject";
+import { limit } from "../utils/utils";
 
 interface SubjectListItemProps {
   subject: Subject;
@@ -22,10 +23,16 @@ function SubjectListItem({
     setSubjectState((s) => ({ ...s, name: event.target.value }));
   }
   function handleCreditChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => ({ ...s, credit: Number(event.target.value) }));
+    setSubjectState((s) => ({
+      ...s,
+      credit: Number(event.target.value),
+    }));
   }
   function handleGradeChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => ({ ...s, grade: Number(event.target.value) }));
+    setSubjectState((s) => ({
+      ...s,
+      grade: limit(Number(event.target.value.replace(/^[1-5]/, "")), 1, 5),
+    }));
   }
 
   useEffect(() => {
@@ -52,14 +59,14 @@ function SubjectListItem({
       <input
         type="number"
         min={0}
-        value={subjectState.credit}
+        value={subjectState.credit.toString()}
         onChange={handleCreditChange}
       />
       <input
         type="number"
         min={1}
         max={5}
-        value={subjectState.grade}
+        value={subjectState.grade.toString()}
         onChange={handleGradeChange}
       />
       <input

@@ -7,11 +7,11 @@ class CalculatorService {
     this.subjects = subjects;
   }
 
-  public creditSum(): Number {
+  public creditSum(): number {
     return this.subjects.reduce((acc, curr) => acc + curr.credit, 0);
   }
 
-  public gradeSum(): Number {
+  public gradeSum(): number {
     return this.subjects.reduce((acc, curr) => acc + curr.grade, 0);
   }
 }

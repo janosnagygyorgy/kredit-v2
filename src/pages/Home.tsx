@@ -18,7 +18,6 @@ function Home({ calculatorService }: HomeProps) {
 
   function updateSubject(subjectId: string, subject: Subject) {
     if (subject.credit < 0 || subject.grade < 1 || subject.grade > 5) {
-      alert("Can not modify subject.");
       return;
     }
     setSubjects((s) =>
