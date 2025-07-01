@@ -14,6 +14,7 @@ function Home({ calculatorService }: HomeProps) {
   const [inputName, setInputName] = useState("");
   const [inputCredit, setInputCredit] = useState("3");
   const [inputGrade, setInputGrade] = useState("5");
+  calculatorService.load(subjects);
 
   function addSubject() {
     const newSubject: Subject = {
@@ -80,10 +81,7 @@ function Home({ calculatorService }: HomeProps) {
           </li>
         ))}
       </ul>
-      <div>
-        Kreditek száma:
-        {subjects.reduce((acc, curr) => acc + curr.credit, 0)}
-      </div>
+      <div>Kreditek összege: {calculatorService.creditSum().toString()}</div>
     </>
   );
 }
