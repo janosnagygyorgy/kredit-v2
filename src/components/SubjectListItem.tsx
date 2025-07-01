@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Subject } from "../interfaces/subject";
 
 interface SubjectListItemProps {
@@ -13,6 +13,7 @@ function SubjectListItem({
   onDeleteSubject,
 }: SubjectListItemProps) {
   const [subjectState, setSubjectState] = useState(subject);
+  const initialRender = useRef(true);
 
   function handleCompletedChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSubjectState((s) => ({ ...s, completed: event.target.checked }));
@@ -28,6 +29,10 @@ function SubjectListItem({
   }
 
   useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
     onUpdateSubject(subject.id, subjectState);
   }, [subjectState]);
 
