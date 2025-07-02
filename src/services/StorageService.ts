@@ -1,46 +1,44 @@
 import { v4 } from "uuid";
-import type { Subject } from "../interfaces/subject";
+import type { StoredData } from "../interfaces/StoredData";
 
 class StorageService {
-  public loadSemesterSubjects(semester: string): Subject[] {
-    switch (semester) {
-      case "1":
-        return [
-          {
-            id: v4(),
-            completed: true,
-            name: "Test1",
-            credit: 1,
-            grade: 1,
-          },
-        ];
-      case "2":
-        return [
-          {
-            id: v4(),
-            completed: true,
-            name: "Test2",
-            credit: 2,
-            grade: 2,
-          },
-        ];
-      case "3":
-        return [
-          {
-            id: v4(),
-            completed: true,
-            name: "Test3",
-            credit: 3,
-            grade: 3,
-          },
-        ];
-      default:
-        return [];
-    }
+  private data: StoredData = {
+    1: [
+      {
+        id: v4(),
+        completed: true,
+        name: "Test1",
+        credit: 1,
+        grade: 1,
+      },
+    ],
+    2: [
+      {
+        id: v4(),
+        completed: true,
+        name: "Test2",
+        credit: 2,
+        grade: 2,
+      },
+    ],
+    3: [
+      {
+        id: v4(),
+        completed: true,
+        name: "Test3",
+        credit: 3,
+        grade: 3,
+      },
+    ],
+  };
+
+  public getData(): StoredData {
+    return this.data;
   }
 
-  public saveSemesterSubjects(semester: string, subjects: Subject[]): void {
-    console.log(semester, subjects);
+  public saveData(data: StoredData): void {
+    this.data = data;
+    console.log(this.data);
   }
 }
 

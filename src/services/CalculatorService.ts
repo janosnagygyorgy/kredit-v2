@@ -1,4 +1,4 @@
-import type { Subject } from "../interfaces/subject";
+import type { Subject } from "../interfaces/Subject";
 
 class CalculatorService {
   private subjects: Subject[] = [];

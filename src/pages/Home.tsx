@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { Subject } from "../interfaces/subject";
+import type { Subject } from "../interfaces/Subject";
 import type CalculatorService from "../services/CalculatorService";
 import type StorageService from "../services/StorageService";
 import SubjectList from "../components/SubjectList";
@@ -12,16 +12,20 @@ interface HomeProps {
 }
 
 function Home({ calculatorService, storageService }: HomeProps) {
+  const data = storageService.getData();
   const [selectedSemester, setSelectedSemester] = useState("1");
-  const [subjects, setSubjects] = useState<Subject[]>(
-    storageService.loadSemesterSubjects(selectedSemester)
-  );
+  const [subjects, setSubjects] = useState<Subject[]>(data[selectedSemester]);
+
+  useEffect(() => {
+    data[selectedSemester] = subjects;
+    storageService.saveData(data);
+  }, [subjects]);
 
   calculatorService.load(subjects);
 
   function changeSemester(selectedSemester: string) {
     setSelectedSemester(() => selectedSemester);
-    setSubjects(() => storageService.loadSemesterSubjects(selectedSemester));
+    setSubjects(() => data[selectedSemester]);
   }
 
   function addSubject(subject: Subject) {
@@ -43,10 +47,6 @@ function Home({ calculatorService, storageService }: HomeProps) {
   function deleteSubject(subjectId: string) {
     setSubjects((s) => s.filter((subject) => subject.id !== subjectId));
   }
-
-  useEffect(() => {
-    storageService.saveSemesterSubjects(selectedSemester, subjects);
-  }, [subjects]);
 
   return (
     <>
