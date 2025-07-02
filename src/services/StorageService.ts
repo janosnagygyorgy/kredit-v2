@@ -8,14 +8,14 @@ class StorageService {
 
   public getData(): StoredData {
     const data = localStorage.getItem("data");
-    console.log(data);
-    if (data === null) return { "1": [] };
+    if (data === null) return { "1": [], "2": [], "3": [] };
     return JSON.parse(data);
   }
 
   public saveData(data: StoredData, selectedSemester: string): void {
     localStorage.setItem("data", JSON.stringify(data));
     localStorage.setItem("selectedSemester", selectedSemester);
+    console.log(data);
   }
 }
 

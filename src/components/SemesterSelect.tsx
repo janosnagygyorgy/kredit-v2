@@ -1,11 +1,17 @@
+import { v4 } from "uuid";
+
 interface SemesterSelectProps {
+  options: string[];
   selectedSemester: string;
   onChangeSelectedSemester: (selectedSemester: string) => void;
+  onDeleteSemester: (semesterToDelete: string) => void;
 }
 
 function SemesterSelect({
+  options,
   selectedSemester,
   onChangeSelectedSemester,
+  onDeleteSemester,
 }: SemesterSelectProps) {
   function handleSemesterChange(event: React.ChangeEvent<HTMLSelectElement>) {
     onChangeSelectedSemester(event.target.value);
@@ -14,10 +20,15 @@ function SemesterSelect({
   return (
     <>
       <select value={selectedSemester} onChange={handleSemesterChange}>
-        <option value="1">A</option>
-        <option value="2">B</option>
-        <option value="3">C</option>
+        {options.map((option) => (
+          <option key={v4()} value={option}>
+            {option}. félév
+          </option>
+        ))}
       </select>
+      <button onClick={() => onDeleteSemester(selectedSemester)}>
+        Félév törlése
+      </button>
       <div>{selectedSemester}</div>
     </>
   );
