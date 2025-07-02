@@ -3,9 +3,11 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import CalculatorService from "./services/CalculatorService";
+import StorageService from "./services/StorageService";
 
 function App() {
   const calculatorService = new CalculatorService();
+  const storageService = new StorageService();
 
   return (
     <>
@@ -14,7 +16,12 @@ function App() {
         <Routes>
           <Route
             path="/Home"
-            element={<Home calculatorService={calculatorService} />}
+            element={
+              <Home
+                calculatorService={calculatorService}
+                storageService={storageService}
+              />
+            }
           />
           <Route
             path="/settings"

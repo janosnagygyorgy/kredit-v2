@@ -1,16 +1,23 @@
 import { useState } from "react";
 import type { Subject } from "../interfaces/subject";
 import type CalculatorService from "../services/CalculatorService";
+import type StorageService from "../services/StorageService";
 import SubjectList from "../components/SubjectList";
 import StatisticsDisplay from "../components/StatisticsDisplay";
+import SemesterSelect from "../components/SemesterSelect";
 
 interface HomeProps {
   calculatorService: CalculatorService;
+  storageService: StorageService;
 }
 
-function Home({ calculatorService }: HomeProps) {
+function Home({ calculatorService, storageService }: HomeProps) {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   calculatorService.load(subjects);
+
+  function replaceSubjects(subjects: Subject[]) {
+    setSubjects(subjects);
+  }
 
   function addSubject(subject: Subject) {
     setSubjects((s) => [subject, ...s]);
@@ -32,6 +39,10 @@ function Home({ calculatorService }: HomeProps) {
   return (
     <>
       <h1>Kreditindex kalkulátor</h1>
+      <SemesterSelect
+        storageService={storageService}
+        replaceSubjects={replaceSubjects}
+      />
       <SubjectList
         subjects={subjects}
         onAddSubject={addSubject}
