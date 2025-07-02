@@ -32,6 +32,10 @@ class StorageService {
     ],
   };
 
+  public getSelectedSemester(): string {
+    return "2";
+  }
+
   public getData(): StoredData {
     return this.data;
   }

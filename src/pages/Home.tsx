@@ -12,16 +12,20 @@ interface HomeProps {
 }
 
 function Home({ calculatorService, storageService }: HomeProps) {
-  const data = storageService.getData();
-  const [selectedSemester, setSelectedSemester] = useState("1");
-  const [subjects, setSubjects] = useState<Subject[]>(data[selectedSemester]);
+  const [data, setData] = useState(storageService.getData());
+  const [selectedSemester, setSelectedSemester] = useState(
+    storageService.getSelectedSemester()
+  );
+  const [subjects, setSubjects] = useState(data[selectedSemester]);
 
   useEffect(() => {
-    data[selectedSemester] = subjects;
-    storageService.saveData(data);
+    const newData = { ...data };
+    newData[selectedSemester] = subjects;
+    setData(() => newData);
+    storageService.saveData(newData);
   }, [subjects]);
 
-  calculatorService.load(subjects);
+  calculatorService.load(data, selectedSemester);
 
   function changeSemester(selectedSemester: string) {
     setSelectedSemester(() => selectedSemester);
