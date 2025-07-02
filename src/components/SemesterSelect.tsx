@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
-
 interface SemesterSelectProps {
-  onChangeSemester: (selectedSemester: string) => void;
+  selectedSemester: string;
+  onChangeSelectedSemester: (selectedSemester: string) => void;
 }
 
-function SemesterSelect({ onChangeSemester }: SemesterSelectProps) {
-  const [selectedSemester, setSelectedSemester] = useState("1");
-
+function SemesterSelect({
+  selectedSemester,
+  onChangeSelectedSemester,
+}: SemesterSelectProps) {
   function handleSemesterChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setSelectedSemester(() => event.target.value);
+    onChangeSelectedSemester(event.target.value);
   }
-
-  useEffect(() => onChangeSemester(selectedSemester), [selectedSemester]);
 
   return (
     <>

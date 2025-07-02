@@ -12,11 +12,16 @@ interface HomeProps {
 }
 
 function Home({ calculatorService, storageService }: HomeProps) {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [selectedSemester, setSelectedSemester] = useState("1");
+  const [subjects, setSubjects] = useState<Subject[]>(
+    storageService.loadSemesterSubjects(selectedSemester)
+  );
+
   calculatorService.load(subjects);
 
   function changeSemester(selectedSemester: string) {
-    setSubjects(storageService.loadSemesterSubjects(selectedSemester));
+    setSelectedSemester(() => selectedSemester);
+    setSubjects(() => storageService.loadSemesterSubjects(selectedSemester));
   }
 
   function addSubject(subject: Subject) {
@@ -46,7 +51,10 @@ function Home({ calculatorService, storageService }: HomeProps) {
   return (
     <>
       <h1>Kreditindex kalkulátor</h1>
-      <SemesterSelect onChangeSemester={changeSemester} />
+      <SemesterSelect
+        selectedSemester={selectedSemester}
+        onChangeSelectedSemester={changeSemester}
+      />
       <SubjectList
         subjects={subjects}
         onAddSubject={addSubject}
