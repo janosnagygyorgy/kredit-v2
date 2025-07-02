@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react";
-import type { Subject } from "../interfaces/subject";
-import type StorageService from "../services/StorageService";
 
 interface SemesterSelectProps {
-  storageService: StorageService;
-  replaceSubjects: (subjects: Subject[]) => void;
+  onChangeSemester: (selectedSemester: string) => void;
 }
 
-function SemesterSelect({
-  storageService,
-  replaceSubjects,
-}: SemesterSelectProps) {
+function SemesterSelect({ onChangeSemester }: SemesterSelectProps) {
   const [selectedSemester, setSelectedSemester] = useState("1");
 
   function handleSemesterChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setSelectedSemester(() => event.target.value);
   }
 
-  useEffect(() => {
-    replaceSubjects(storageService.loadSemesterSubjects(selectedSemester));
-  }, [selectedSemester]);
+  useEffect(() => onChangeSemester(selectedSemester), [selectedSemester]);
 
   return (
     <>

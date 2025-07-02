@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Subject } from "../interfaces/subject";
 import type CalculatorService from "../services/CalculatorService";
 import type StorageService from "../services/StorageService";
@@ -15,11 +15,14 @@ function Home({ calculatorService, storageService }: HomeProps) {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   calculatorService.load(subjects);
 
-  function replaceSubjects(subjects: Subject[]) {
-    setSubjects(subjects);
+  function changeSemester(selectedSemester: string) {
+    setSubjects(storageService.loadSemesterSubjects(selectedSemester));
   }
 
   function addSubject(subject: Subject) {
+    if (subject.credit < 0 || subject.grade < 1 || subject.grade > 5) {
+      return;
+    }
     setSubjects((s) => [subject, ...s]);
   }
 
@@ -36,13 +39,14 @@ function Home({ calculatorService, storageService }: HomeProps) {
     setSubjects((s) => s.filter((subject) => subject.id !== subjectId));
   }
 
+  useEffect(() => {
+    // storageService.saveSemesterSubjects(selectedSemester,subjects)
+  }, [subjects]);
+
   return (
     <>
       <h1>Kreditindex kalkulátor</h1>
-      <SemesterSelect
-        storageService={storageService}
-        replaceSubjects={replaceSubjects}
-      />
+      <SemesterSelect onChangeSemester={changeSemester} />
       <SubjectList
         subjects={subjects}
         onAddSubject={addSubject}
