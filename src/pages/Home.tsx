@@ -22,7 +22,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
     const newData = { ...data };
     newData[selectedSemester] = subjects;
     setData(() => newData);
-    storageService.saveData(newData);
+    storageService.saveData(newData, selectedSemester);
   }, [subjects]);
 
   calculatorService.load(data, selectedSemester);

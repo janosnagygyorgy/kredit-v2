@@ -1,48 +1,21 @@
-import { v4 } from "uuid";
 import type { StoredData } from "../interfaces/StoredData";
 
 class StorageService {
-  private data: StoredData = {
-    1: [
-      {
-        id: v4(),
-        completed: true,
-        name: "Test1",
-        credit: 1,
-        grade: 1,
-      },
-    ],
-    2: [
-      {
-        id: v4(),
-        completed: true,
-        name: "Test2",
-        credit: 2,
-        grade: 2,
-      },
-    ],
-    3: [
-      {
-        id: v4(),
-        completed: true,
-        name: "Test3",
-        credit: 3,
-        grade: 3,
-      },
-    ],
-  };
-
   public getSelectedSemester(): string {
-    return "2";
+    const selectedSemester = localStorage.getItem("selectedSemester");
+    return selectedSemester ?? "1";
   }
 
   public getData(): StoredData {
-    return this.data;
+    const data = localStorage.getItem("data");
+    console.log(data);
+    if (data === null) return { "1": [] };
+    return JSON.parse(data);
   }
 
-  public saveData(data: StoredData): void {
-    this.data = data;
-    console.log(this.data);
+  public saveData(data: StoredData, selectedSemester: string): void {
+    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("selectedSemester", selectedSemester);
   }
 }
 
