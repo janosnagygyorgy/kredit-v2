@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { v4 } from "uuid";
-import type { Subject } from "../interfaces/subject";
+import type { Subject } from "../interfaces/Subject";
 import { limit } from "../utils/utils";
 
 interface SubjectListInputProps {

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { Subject } from "../interfaces/subject";
+import { useEffect, useState } from "react";
+import type { Subject } from "../interfaces/Subject";
 import type CalculatorService from "../services/CalculatorService";
 import type StorageService from "../services/StorageService";
 import SubjectList from "../components/SubjectList";
@@ -12,14 +12,30 @@ interface HomeProps {
 }
 
 function Home({ calculatorService, storageService }: HomeProps) {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
-  calculatorService.load(subjects);
+  const [data, setData] = useState(storageService.getData());
+  const [selectedSemester, setSelectedSemester] = useState(
+    storageService.getSelectedSemester()
+  );
+  const [subjects, setSubjects] = useState(data[selectedSemester]);
 
-  function replaceSubjects(subjects: Subject[]) {
-    setSubjects(subjects);
+  useEffect(() => {
+    const newData = { ...data };
+    newData[selectedSemester] = subjects;
+    setData(() => newData);
+    storageService.saveData(newData, selectedSemester);
+  }, [subjects]);
+
+  calculatorService.load(data, selectedSemester);
+
+  function changeSemester(selectedSemester: string) {
+    setSelectedSemester(() => selectedSemester);
+    setSubjects(() => data[selectedSemester]);
   }
 
   function addSubject(subject: Subject) {
+    if (subject.credit < 0 || subject.grade < 1 || subject.grade > 5) {
+      return;
+    }
     setSubjects((s) => [subject, ...s]);
   }
 
@@ -40,8 +56,8 @@ function Home({ calculatorService, storageService }: HomeProps) {
     <>
       <h1>Kreditindex kalkulátor</h1>
       <SemesterSelect
-        storageService={storageService}
-        replaceSubjects={replaceSubjects}
+        selectedSemester={selectedSemester}
+        onChangeSelectedSemester={changeSemester}
       />
       <SubjectList
         subjects={subjects}

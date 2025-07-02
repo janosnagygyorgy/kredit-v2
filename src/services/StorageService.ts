@@ -1,42 +1,21 @@
-import { v4 } from "uuid";
-import type { Subject } from "../interfaces/subject";
+import type { StoredData } from "../interfaces/StoredData";
 
 class StorageService {
-  public loadSemesterSubjects(semester: string): Subject[] {
-    switch (semester) {
-      case "1":
-        return [
-          {
-            id: v4(),
-            completed: true,
-            name: "Test1",
-            credit: 1,
-            grade: 1,
-          },
-        ];
-      case "2":
-        return [
-          {
-            id: v4(),
-            completed: true,
-            name: "Test2",
-            credit: 2,
-            grade: 2,
-          },
-        ];
-      case "3":
-        return [
-          {
-            id: v4(),
-            completed: true,
-            name: "Test3",
-            credit: 3,
-            grade: 3,
-          },
-        ];
-      default:
-        return [];
-    }
+  public getSelectedSemester(): string {
+    const selectedSemester = localStorage.getItem("selectedSemester");
+    return selectedSemester ?? "1";
+  }
+
+  public getData(): StoredData {
+    const data = localStorage.getItem("data");
+    console.log(data);
+    if (data === null) return { "1": [] };
+    return JSON.parse(data);
+  }
+
+  public saveData(data: StoredData, selectedSemester: string): void {
+    localStorage.setItem("data", JSON.stringify(data));
+    localStorage.setItem("selectedSemester", selectedSemester);
   }
 }
 
