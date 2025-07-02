@@ -38,6 +38,10 @@ class StorageService {
         return [];
     }
   }
+
+  public saveSemesterSubjects(semester: string, subjects: Subject[]): void {
+    console.log(semester, subjects);
+  }
 }
 
 export default StorageService;

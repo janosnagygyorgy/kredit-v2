@@ -45,7 +45,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
   }
 
   useEffect(() => {
-    // storageService.saveSemesterSubjects(selectedSemester,subjects)
+    storageService.saveSemesterSubjects(selectedSemester, subjects);
   }, [subjects]);
 
   return (
