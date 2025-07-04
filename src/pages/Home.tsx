@@ -15,22 +15,18 @@ interface HomeProps {
 function Home({ calculatorService, storageService }: HomeProps) {
   const [data, setData] = useState(storageService.getData());
   const [selectedSemester, setSelectedSemester] = useState(
-    storageService.getSelectedSemester()
+    storageService.getSelectedSemester() ?? Object.keys(data)[0]
   );
-  const [subjects, setSubjects] = useState(data[selectedSemester]);
+  const subjects = data[selectedSemester];
 
   useEffect(() => {
-    const newData = { ...data };
-    newData[selectedSemester] = subjects;
-    setData(() => newData);
-    storageService.saveData(newData, selectedSemester);
-  }, [subjects]);
+    storageService.saveData(data, selectedSemester);
+  }, [data]);
 
   calculatorService.load(data, selectedSemester);
 
   function changeSemester(selectedSemester: string): void {
     setSelectedSemester(() => selectedSemester);
-    setSubjects(() => data[selectedSemester]);
   }
 
   function deleteSemester(semesterToDelete: string): void {
@@ -41,27 +37,38 @@ function Home({ calculatorService, storageService }: HomeProps) {
         return accObj;
       }, {} as StoredData);
     setData(() => newData);
-    changeSemester(Object.keys(newData)[0]); // TODO: handle empty data
+    changeSemester(Object.keys(newData)[0]);
   }
 
   function addSubject(subject: Subject): void {
     if (subject.credit < 0 || subject.grade < 1 || subject.grade > 5) {
       return;
     }
-    setSubjects((s) => [subject, ...s]);
+    setData((d) => ({
+      ...d,
+      [selectedSemester]: [subject, ...subjects],
+    }));
   }
 
   function updateSubject(subjectId: string, subject: Subject): void {
     if (subject.credit < 0 || subject.grade < 1 || subject.grade > 5) {
       return;
     }
-    setSubjects((s) =>
-      s.map((item) => (item.id === subjectId ? subject : item))
-    );
+    setData((d) => ({
+      ...d,
+      [selectedSemester]: subjects.map((item) =>
+        item.id === subjectId ? subject : item
+      ),
+    }));
   }
 
   function deleteSubject(subjectId: string): void {
-    setSubjects((s) => s.filter((subject) => subject.id !== subjectId));
+    setData((d) => ({
+      ...d,
+      [selectedSemester]: subjects.filter(
+        (subject) => subject.id !== subjectId
+      ),
+    }));
   }
 
   return (
@@ -74,7 +81,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
         onDeleteSemester={deleteSemester}
       />
       <SubjectList
-        subjects={subjects}
+        subjects={data[selectedSemester]}
         onAddSubject={addSubject}
         onUpdateSubject={updateSubject}
         onDeleteSubject={deleteSubject}

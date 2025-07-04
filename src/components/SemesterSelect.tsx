@@ -22,7 +22,7 @@ function SemesterSelect({
       <select value={selectedSemester} onChange={handleSemesterChange}>
         {options.map((option) => (
           <option key={v4()} value={option}>
-            {option}. félév
+            {option}
           </option>
         ))}
       </select>

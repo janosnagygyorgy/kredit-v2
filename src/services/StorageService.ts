@@ -1,14 +1,14 @@
 import type { StoredData } from "../interfaces/StoredData";
 
 class StorageService {
-  public getSelectedSemester(): string {
+  public getSelectedSemester(): string | null {
     const selectedSemester = localStorage.getItem("selectedSemester");
-    return selectedSemester ?? "1";
+    return selectedSemester;
   }
 
   public getData(): StoredData {
     const data = localStorage.getItem("data");
-    if (data === null) return { "1": [], "2": [], "3": [] };
+    if (data === null) return { A: [], B: [], C: [] };
     return JSON.parse(data);
   }
 
