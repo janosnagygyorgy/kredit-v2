@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { v4 } from "uuid";
 
 interface SemesterSelectProps {
@@ -15,6 +16,8 @@ function SemesterSelect({
   onChangeSelectedSemester,
   onDeleteSemester,
 }: SemesterSelectProps) {
+  const addSemesterInput = useRef<HTMLInputElement>(null);
+
   function handleSemesterChange(event: React.ChangeEvent<HTMLSelectElement>) {
     onChangeSelectedSemester(event.target.value);
   }
@@ -32,6 +35,16 @@ function SemesterSelect({
         Félév törlése
       </button>
       <div>{selectedSemester}</div>
+      <input type="text" ref={addSemesterInput} />
+      <button
+        onClick={() => {
+          if (!addSemesterInput.current) return;
+          onAddSemester(addSemesterInput.current.value);
+          addSemesterInput.current.value = "";
+        }}
+      >
+        Félév hozzáadása
+      </button>
     </>
   );
 }
