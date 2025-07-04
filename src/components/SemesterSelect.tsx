@@ -3,6 +3,7 @@ import { v4 } from "uuid";
 interface SemesterSelectProps {
   options: string[];
   selectedSemester: string;
+  onAddSemester: (newSemester: string) => void;
   onChangeSelectedSemester: (selectedSemester: string) => void;
   onDeleteSemester: (semesterToDelete: string) => void;
 }
@@ -10,6 +11,7 @@ interface SemesterSelectProps {
 function SemesterSelect({
   options,
   selectedSemester,
+  onAddSemester,
   onChangeSelectedSemester,
   onDeleteSemester,
 }: SemesterSelectProps) {

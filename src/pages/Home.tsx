@@ -25,6 +25,11 @@ function Home({ calculatorService, storageService }: HomeProps) {
 
   calculatorService.load(data, selectedSemester);
 
+  function addSemester(newSemester: string): void {
+    setData((d) => ({ ...d, [newSemester]: [] }));
+    changeSemester(newSemester);
+  }
+
   function changeSemester(selectedSemester: string): void {
     setSelectedSemester(() => selectedSemester);
   }
@@ -37,7 +42,10 @@ function Home({ calculatorService, storageService }: HomeProps) {
         return accObj;
       }, {} as StoredData);
     setData(() => newData);
-    changeSemester(Object.keys(newData)[0]);
+    if (Object.keys(newData).length === 0) {
+      console.log("No semesters left");
+      addSemester("1");
+    } else changeSemester(Object.keys(newData)[0]);
   }
 
   function addSubject(subject: Subject): void {
@@ -77,6 +85,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
       <SemesterSelect
         options={Object.keys(data)}
         selectedSemester={selectedSemester}
+        onAddSemester={addSemester}
         onChangeSelectedSemester={changeSemester}
         onDeleteSemester={deleteSemester}
       />
