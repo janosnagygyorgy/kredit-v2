@@ -31,7 +31,7 @@ function SubjectListItem({
   function handleGradeChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSubjectState((s) => ({
       ...s,
-      grade: limit(Number(event.target.value.replace(/^[1-5]/, "")), 1, 5),
+      grade: Number(event.target.value),
     }));
   }
 

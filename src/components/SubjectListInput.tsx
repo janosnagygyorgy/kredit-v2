@@ -36,11 +36,7 @@ function SubjectListInput({ onAddSubject }: SubjectListInputProps) {
         min={1}
         max={5}
         value={inputGrade.toString()}
-        onChange={(event) =>
-          setInputGrade(
-            limit(Number(event.target.value.replace(/^[1-5]/, "")), 1, 5)
-          )
-        }
+        onChange={(event) => setInputGrade(Number(event.target.value))}
       />
       <input
         type="button"
