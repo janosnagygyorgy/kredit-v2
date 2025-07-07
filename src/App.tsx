@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import CalculatorService from "./services/CalculatorService";
 import StorageService from "./services/StorageService";
+import Help from "./pages/Help";
 
 function App() {
   const calculatorService = new CalculatorService();
@@ -27,6 +28,7 @@ function App() {
             path="/settings"
             element={<Settings calculatorService={calculatorService} />}
           />
+          <Route path="/help" element={<Help />} />
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
       </div>

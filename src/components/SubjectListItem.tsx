@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import type { Subject } from "../interfaces/Subject";
-import { limit } from "../utils/utils";
 
 interface SubjectListItemProps {
   subject: Subject;
