@@ -5,8 +5,9 @@ function Navbar() {
   return (
     <nav className="navbar">
       <ul>
-        <NavigationLink to="/home">Home</NavigationLink>
-        <NavigationLink to="/settings">Settings</NavigationLink>
+        <NavigationLink to="/home">Főoldal</NavigationLink>
+        <NavigationLink to="/settings">Beállítások</NavigationLink>
+        <NavigationLink to="/help">Súgó</NavigationLink>
       </ul>
     </nav>
   );

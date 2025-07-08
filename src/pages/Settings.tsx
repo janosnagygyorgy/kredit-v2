@@ -7,7 +7,7 @@ interface SettingsProps {
 function Settings({ calculatorService }: SettingsProps) {
   return (
     <>
-      <h1>Settings</h1>
+      <h1>Beállítások</h1>
     </>
   );
 }
