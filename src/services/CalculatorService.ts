@@ -89,11 +89,78 @@ class CalculatorService {
   //#endregion Semester statistics
 
   //#region Cumulated statistics
+  public cumulatedCreditSum(): number {
+    const semesters = Object.keys(this.data);
+    let sum = 0;
+    for (let i = 0; i < semesters.length; i++) {
+      sum += this.semesterCreditSum(semesters[i]);
+      if (semesters[i] === this.selectedSemester) break;
+    }
+    return sum;
+  }
+
   // Összesített hagyományos átlag
+  public cumulatedTraditionalAverage(): number {
+    const semesters = Object.keys(this.data);
+    let gradeSum = 0;
+    let numberOfSubjects = 0;
+    for (let i = 0; i < semesters.length; i++) {
+      gradeSum += this.semesterGradeSum(semesters[i]);
+      numberOfSubjects += this.semesterNumberOfSubjects(semesters[i]);
+      if (semesters[i] === this.selectedSemester) break;
+    }
+    return gradeSum / numberOfSubjects;
+  }
+
   // Összesített súlyozott átlag
-  // Összesített kreditindex
-  // Összesített korrigált kreditindex
+  public cumulatedWeightedAverage(): number {
+    const semesters = Object.keys(this.data);
+    let creditGradeProductSum = 0;
+    let completedCreditSum = 0;
+    for (let i = 0; i < semesters.length; i++) {
+      creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
+        semesters[i]
+      );
+      completedCreditSum += this.semesterCompletedCreditSum(semesters[i]);
+      if (semesters[i] === this.selectedSemester) break;
+    }
+    return creditGradeProductSum / completedCreditSum;
+  }
+
   // Összes teljesített kredit
+  public cumulatedCompletedCreditSum(): number {
+    const semesters = Object.keys(this.data);
+    let sum = 0;
+    for (let i = 0; i < semesters.length; i++) {
+      sum += this.semesterCompletedCreditSum(semesters[i]);
+      if (semesters[i] === this.selectedSemester) break;
+    }
+    return sum;
+  }
+
+  // Összesített kreditindex
+  public cumulatedCreditIndex(): number {
+    const semesters = Object.keys(this.data);
+    let creditGradeProductSum = 0;
+    let semesterCounter = 0;
+    for (let i = 0; i < semesters.length; i++) {
+      semesterCounter++;
+      creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
+        semesters[i]
+      );
+      if (semesters[i] === this.selectedSemester) break;
+    }
+    return creditGradeProductSum / (semesterCounter * 30);
+  }
+
+  // Összesített korrigált kreditindex
+  public cumulatedCorrectedCreditIndex(): number {
+    return (
+      this.cumulatedCreditIndex() *
+      (this.cumulatedCompletedCreditSum() / this.cumulatedCreditSum())
+    );
+  }
+
   //#endregion Cumulated statistics
 }
 
