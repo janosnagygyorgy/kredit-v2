@@ -15,25 +15,31 @@ interface HomeProps {
 function Home({ calculatorService, storageService }: HomeProps) {
   const [data, setData] = useState(storageService.getData());
   const [selectedSemester, setSelectedSemester] = useState(
-    storageService.getSelectedSemester() ?? Object.keys(data)[0]
+    storageService.getSelectedSemester() ?? data[0].name
   );
-  const subjects = data[selectedSemester];
+  const subjects =
+    data.find((s) => s.name === selectedSemester)?.subjects ?? [];
   const date = new Date();
   const defaultSemesterName =
     date.getFullYear() + "/" + (date.getMonth() < 7 ? "2" : "1");
 
   useEffect(() => {
     storageService.saveData(data, selectedSemester);
-  }, [data]);
+  }, [data, selectedSemester]);
 
   calculatorService.load(data, selectedSemester);
 
+  //#region Semesters
   function addSemester(newSemester: string): void {
     if (newSemester.length < 1 || newSemester.split(" ").length > 1) {
       alert("Érvénytelen félév név.");
       return;
     }
-    setData((d) => ({ ...d, [newSemester]: [] }));
+    if (data.find((s) => s.name === newSemester)) {
+      alert("Már létezik ilyen félév.");
+      return;
+    }
+    setData((d) => [...d, { name: newSemester, subjects: [] }] as StoredData);
     changeSemester(newSemester);
   }
 
@@ -42,62 +48,67 @@ function Home({ calculatorService, storageService }: HomeProps) {
   }
 
   function deleteSemester(semesterToDelete: string): void {
-    const newData: StoredData = Object.keys(data)
-      .filter((key) => key != semesterToDelete)
-      .reduce((accObj, key) => {
-        accObj[key] = data[key];
-        return accObj;
-      }, {} as StoredData);
+    const newData: StoredData = data.filter((s) => s.name !== semesterToDelete);
     setData(() => newData);
-    if (Object.keys(newData).length === 0) {
+    if (newData.length === 0) {
       console.log("No semesters left");
-      addSemester(defaultSemesterName);
-    } else changeSemester(Object.keys(newData)[0]);
+      setData(
+        () =>
+          [
+            ...newData,
+            { name: defaultSemesterName, subjects: [] },
+          ] as StoredData
+      );
+      changeSemester(defaultSemesterName);
+    } else changeSemester(newData[0].name);
+  }
+  //#endregion Semesters
+
+  //#region Subjects
+  function updateSemesterSubjects(
+    subjects: Subject[],
+    semester: string = selectedSemester
+  ): void {
+    setData(
+      (d) =>
+        d.map((s) =>
+          s.name === semester ? { ...s, subjects: subjects } : s
+        ) as StoredData
+    );
   }
 
   function addSubject(subject: Subject): void {
     if (subject.credit < 0 || subject.grade < 1 || subject.grade > 5) {
       return;
     }
-    setData((d) => ({
-      ...d,
-      [selectedSemester]: [subject, ...subjects],
-    }));
+    updateSemesterSubjects([subject, ...subjects]);
   }
 
   function updateSubject(subjectId: string, subject: Subject): void {
     if (subject.credit < 0 || subject.grade < 1 || subject.grade > 5) {
       return;
     }
-    setData((d) => ({
-      ...d,
-      [selectedSemester]: subjects.map((item) =>
-        item.id === subjectId ? subject : item
-      ),
-    }));
+    updateSemesterSubjects(
+      subjects.map((item) => (item.id === subjectId ? subject : item))
+    );
   }
 
   function deleteSubject(subjectId: string): void {
-    setData((d) => ({
-      ...d,
-      [selectedSemester]: subjects.filter(
-        (subject) => subject.id !== subjectId
-      ),
-    }));
+    updateSemesterSubjects(subjects.filter((item) => item.id !== subjectId));
   }
 
   return (
     <>
       <h1>Kreditindex kalkulátor</h1>
       <SemesterSelect
-        options={Object.keys(data)}
+        options={data.map((s) => s.name)}
         selectedSemester={selectedSemester}
         onAddSemester={addSemester}
         onChangeSelectedSemester={changeSemester}
         onDeleteSemester={deleteSemester}
       />
       <SubjectList
-        subjects={data[selectedSemester]}
+        subjects={subjects}
         onAddSubject={addSubject}
         onUpdateSubject={updateSubject}
         onDeleteSubject={deleteSubject}

@@ -1,7 +1,8 @@
 import type { StoredData } from "../interfaces/StoredData";
+import type { Subject } from "../interfaces/Subject";
 
 class CalculatorService {
-  private data: StoredData = {};
+  private data: StoredData = [];
   private selectedSemester: string = "";
 
   public load(data: StoredData, selectedSemester: string): void {
@@ -9,16 +10,23 @@ class CalculatorService {
     this.selectedSemester = selectedSemester;
   }
 
+  private getSemesterSubjects(semester: string): Subject[] {
+    return this.data.find((s) => s.name === semester)?.subjects ?? [];
+  }
+
   //#region Semester statistics
   //#region Sums
   public semesterGradeSum(semester: string = this.selectedSemester): number {
-    return this.data[semester].reduce((acc, curr) => acc + curr.grade, 0);
+    return this.getSemesterSubjects(semester).reduce(
+      (acc, curr) => acc + curr.grade,
+      0
+    );
   }
 
   public semesterCompletedGradeSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester]
+    return this.getSemesterSubjects(semester)
       .filter((e) => e.completed && e.grade > 1)
       .reduce((acc, curr) => acc + curr.grade, 0);
   }
@@ -26,7 +34,7 @@ class CalculatorService {
   public semesterCreditGradeProductSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester].reduce(
+    return this.getSemesterSubjects(semester).reduce(
       (acc, curr) => acc + curr.credit * curr.grade,
       0
     );
@@ -35,7 +43,7 @@ class CalculatorService {
   public semesterCompletedCreditGradeProductSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester]
+    return this.getSemesterSubjects(semester)
       .filter((e) => e.completed && e.grade > 1)
       .reduce((acc, curr) => acc + curr.credit * curr.grade, 0);
   }
@@ -43,7 +51,7 @@ class CalculatorService {
   public semesterNumberOfSubjects(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester].length;
+    return this.getSemesterSubjects(semester).length;
   }
   //#endregion Sums
 
@@ -62,14 +70,17 @@ class CalculatorService {
 
   // Felvett kredit
   public semesterCreditSum(semester: string = this.selectedSemester): number {
-    return this.data[semester].reduce((acc, curr) => acc + curr.credit, 0);
+    return this.getSemesterSubjects(semester).reduce(
+      (acc, curr) => acc + curr.credit,
+      0
+    );
   }
 
   // Teljesített kredit
   public semesterCompletedCreditSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester]
+    return this.getSemesterSubjects(semester)
       .filter((e) => e.completed && e.grade > 1)
       .reduce((acc, curr) => acc + curr.credit, 0);
   }
