@@ -96,6 +96,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
   function deleteSubject(subjectId: string): void {
     updateSemesterSubjects(subjects.filter((item) => item.id !== subjectId));
   }
+  //#endregion Subjects
 
   return (
     <>
