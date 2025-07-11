@@ -64,6 +64,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
   }
 
   function moveSemester(fromIndex: number, toIndex: number): void {
+    if (fromIndex === toIndex || toIndex - fromIndex === 1) return;
     const newData: StoredData = data.filter((_, index) => index !== fromIndex);
     newData.splice(toIndex, 0, data[fromIndex]);
     setData(() => newData);
