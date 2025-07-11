@@ -63,22 +63,6 @@ function Home({ calculatorService, storageService }: HomeProps) {
     } else changeSemester(newData[0].name);
   }
 
-  function swapSemesters(semester1: string, semester2: string): void {
-    const newData: StoredData = [...data];
-
-    const semester1Index = newData.findIndex((s) => s.name === semester1);
-    const semester2Index = newData.findIndex((s) => s.name === semester2);
-
-    //TODO: check indexes
-
-    [newData[semester1Index], newData[semester2Index]] = [
-      newData[semester2Index],
-      newData[semester1Index],
-    ];
-
-    setData(() => newData);
-  }
-
   function moveSemester(fromIndex: number, toIndex: number): void {
     const newData: StoredData = data.filter((_, index) => index !== fromIndex);
     newData.splice(toIndex, 0, data[fromIndex]);
@@ -124,9 +108,6 @@ function Home({ calculatorService, storageService }: HomeProps) {
   return (
     <>
       <h1>Kreditindex kalkulátor</h1>
-      <button onClick={() => swapSemesters("2022/23/1", "2024/25/2")}>
-        Csere
-      </button>
       <SemesterSelect
         options={data.map((s) => s.name)}
         selectedSemester={selectedSemester}
