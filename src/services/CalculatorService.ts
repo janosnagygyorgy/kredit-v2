@@ -1,7 +1,8 @@
 import type { StoredData } from "../interfaces/StoredData";
+import type { Subject } from "../interfaces/Subject";
 
 class CalculatorService {
-  private data: StoredData = {};
+  private data: StoredData = [];
   private selectedSemester: string = "";
 
   public load(data: StoredData, selectedSemester: string): void {
@@ -9,16 +10,23 @@ class CalculatorService {
     this.selectedSemester = selectedSemester;
   }
 
+  private getSemesterSubjects(semester: string): Subject[] {
+    return this.data.find((s) => s.name === semester)?.subjects ?? [];
+  }
+
   //#region Semester statistics
   //#region Sums
   public semesterGradeSum(semester: string = this.selectedSemester): number {
-    return this.data[semester].reduce((acc, curr) => acc + curr.grade, 0);
+    return this.getSemesterSubjects(semester).reduce(
+      (acc, curr) => acc + curr.grade,
+      0
+    );
   }
 
   public semesterCompletedGradeSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester]
+    return this.getSemesterSubjects(semester)
       .filter((e) => e.completed && e.grade > 1)
       .reduce((acc, curr) => acc + curr.grade, 0);
   }
@@ -26,7 +34,7 @@ class CalculatorService {
   public semesterCreditGradeProductSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester].reduce(
+    return this.getSemesterSubjects(semester).reduce(
       (acc, curr) => acc + curr.credit * curr.grade,
       0
     );
@@ -35,7 +43,7 @@ class CalculatorService {
   public semesterCompletedCreditGradeProductSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester]
+    return this.getSemesterSubjects(semester)
       .filter((e) => e.completed && e.grade > 1)
       .reduce((acc, curr) => acc + curr.credit * curr.grade, 0);
   }
@@ -43,7 +51,7 @@ class CalculatorService {
   public semesterNumberOfSubjects(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester].length;
+    return this.getSemesterSubjects(semester).length;
   }
   //#endregion Sums
 
@@ -62,14 +70,17 @@ class CalculatorService {
 
   // Felvett kredit
   public semesterCreditSum(semester: string = this.selectedSemester): number {
-    return this.data[semester].reduce((acc, curr) => acc + curr.credit, 0);
+    return this.getSemesterSubjects(semester).reduce(
+      (acc, curr) => acc + curr.credit,
+      0
+    );
   }
 
   // Teljesített kredit
   public semesterCompletedCreditSum(
     semester: string = this.selectedSemester
   ): number {
-    return this.data[semester]
+    return this.getSemesterSubjects(semester)
       .filter((e) => e.completed && e.grade > 1)
       .reduce((acc, curr) => acc + curr.credit, 0);
   }
@@ -90,65 +101,60 @@ class CalculatorService {
 
   //#region Cumulated statistics
   public cumulatedCreditSum(): number {
-    const semesters = Object.keys(this.data);
     let sum = 0;
-    for (let i = 0; i < semesters.length; i++) {
-      sum += this.semesterCreditSum(semesters[i]);
-      if (semesters[i] === this.selectedSemester) break;
+    for (let i = 0; i < this.data.length; i++) {
+      sum += this.semesterCreditSum(this.data[i].name);
+      if (this.data[i].name === this.selectedSemester) break;
     }
     return sum;
   }
 
   // Összesített hagyományos átlag
   public cumulatedTraditionalAverage(): number {
-    const semesters = Object.keys(this.data);
     let gradeSum = 0;
     let numberOfSubjects = 0;
-    for (let i = 0; i < semesters.length; i++) {
-      gradeSum += this.semesterGradeSum(semesters[i]);
-      numberOfSubjects += this.semesterNumberOfSubjects(semesters[i]);
-      if (semesters[i] === this.selectedSemester) break;
+    for (let i = 0; i < this.data.length; i++) {
+      gradeSum += this.semesterGradeSum(this.data[i].name);
+      numberOfSubjects += this.semesterNumberOfSubjects(this.data[i].name);
+      if (this.data[i].name === this.selectedSemester) break;
     }
     return gradeSum / numberOfSubjects;
   }
 
   // Összesített súlyozott átlag
   public cumulatedWeightedAverage(): number {
-    const semesters = Object.keys(this.data);
     let creditGradeProductSum = 0;
     let completedCreditSum = 0;
-    for (let i = 0; i < semesters.length; i++) {
+    for (let i = 0; i < this.data.length; i++) {
       creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
-        semesters[i]
+        this.data[i].name
       );
-      completedCreditSum += this.semesterCompletedCreditSum(semesters[i]);
-      if (semesters[i] === this.selectedSemester) break;
+      completedCreditSum += this.semesterCompletedCreditSum(this.data[i].name);
+      if (this.data[i].name === this.selectedSemester) break;
     }
     return creditGradeProductSum / completedCreditSum;
   }
 
   // Összes teljesített kredit
   public cumulatedCompletedCreditSum(): number {
-    const semesters = Object.keys(this.data);
     let sum = 0;
-    for (let i = 0; i < semesters.length; i++) {
-      sum += this.semesterCompletedCreditSum(semesters[i]);
-      if (semesters[i] === this.selectedSemester) break;
+    for (let i = 0; i < this.data.length; i++) {
+      sum += this.semesterCompletedCreditSum(this.data[i].name);
+      if (this.data[i].name === this.selectedSemester) break;
     }
     return sum;
   }
 
   // Összesített kreditindex
   public cumulatedCreditIndex(): number {
-    const semesters = Object.keys(this.data);
     let creditGradeProductSum = 0;
     let semesterCounter = 0;
-    for (let i = 0; i < semesters.length; i++) {
+    for (let i = 0; i < this.data.length; i++) {
       semesterCounter++;
       creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
-        semesters[i]
+        this.data[i].name
       );
-      if (semesters[i] === this.selectedSemester) break;
+      if (this.data[i].name === this.selectedSemester) break;
     }
     return creditGradeProductSum / (semesterCounter * 30);
   }

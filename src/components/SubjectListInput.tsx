@@ -7,7 +7,7 @@ interface SubjectListInputProps {
 }
 
 function SubjectListInput({ onAddSubject }: SubjectListInputProps) {
-  const [inputCompleted, setInputCompleted] = useState(false);
+  const [inputCompleted, setInputCompleted] = useState(true);
   const [inputName, setInputName] = useState("");
   const [inputCredit, setInputCredit] = useState(3);
   const [inputGrade, setInputGrade] = useState(5);

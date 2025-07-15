@@ -118,6 +118,7 @@ function Help() {
       </math>
 
       <h3>Összesített súlyozott átlag</h3>
+      <p>Neptunban "Halmozott átlag"</p>
       <math>
         <mfrac>
           <mrow>

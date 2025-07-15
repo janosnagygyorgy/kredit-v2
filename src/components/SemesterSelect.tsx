@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { v4 } from "uuid";
+import DragDropList from "./DragDropList";
 
 interface SemesterSelectProps {
   options: string[];
@@ -7,6 +7,7 @@ interface SemesterSelectProps {
   onAddSemester: (newSemester: string) => void;
   onChangeSelectedSemester: (selectedSemester: string) => void;
   onDeleteSemester: (semesterToDelete: string) => void;
+  onMoveSemester: (fromIndex: number, toIndex: number) => void;
 }
 
 function SemesterSelect({
@@ -15,22 +16,30 @@ function SemesterSelect({
   onAddSemester,
   onChangeSelectedSemester,
   onDeleteSemester,
+  onMoveSemester,
 }: SemesterSelectProps) {
   const addSemesterInput = useRef<HTMLInputElement>(null);
 
-  function handleSemesterChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    onChangeSelectedSemester(event.target.value);
+  function handleSemesterChange(semester: string) {
+    onChangeSelectedSemester(semester);
   }
 
   return (
     <>
-      <select value={selectedSemester} onChange={handleSemesterChange}>
-        {options.map((option) => (
-          <option key={v4()} value={option}>
-            {option}
-          </option>
+      <DragDropList
+        onMoveItem={onMoveSemester}
+        children={options.map((option, index) => (
+          <div
+            onClick={() => handleSemesterChange(option)}
+            style={{
+              backgroundColor: option === selectedSemester ? "red" : "",
+              cursor: "grab",
+            }}
+          >
+            {`${index}. ${option}`}
+          </div>
         ))}
-      </select>
+      />
       <button onClick={() => onDeleteSemester(selectedSemester)}>
         Félév törlése
       </button>

@@ -1,5 +1,3 @@
-import type { Subject } from "./Subject";
+import type { Semester } from "./Semester";
 
-export interface StoredData {
-  [key: string]: Subject[];
-}
+export type StoredData = Semester[];

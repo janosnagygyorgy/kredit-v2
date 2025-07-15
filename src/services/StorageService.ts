@@ -8,7 +8,12 @@ class StorageService {
 
   public getData(): StoredData {
     const data = localStorage.getItem("data");
-    if (data === null) return { A: [], B: [], C: [] };
+    if (data === null)
+      return [
+        { name: "A", subjects: [] },
+        { name: "B", subjects: [] },
+        { name: "C", subjects: [] },
+      ];
     return JSON.parse(data);
   }
 

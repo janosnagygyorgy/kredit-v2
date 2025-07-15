@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { Subject } from "../interfaces/Subject";
 
 interface SubjectListItemProps {
@@ -13,34 +13,41 @@ function SubjectListItem({
   onDeleteSubject,
 }: SubjectListItemProps) {
   const [subjectState, setSubjectState] = useState(subject);
-  const initialRender = useRef(true);
 
   function handleCompletedChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => ({ ...s, completed: event.target.checked }));
+    setSubjectState((s) => {
+      const newSubject = { ...s, completed: event.target.checked };
+      onUpdateSubject(subject.id, newSubject);
+      return newSubject;
+    });
   }
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => ({ ...s, name: event.target.value }));
+    setSubjectState((s) => {
+      const newSubject = { ...s, name: event.target.value };
+      onUpdateSubject(subject.id, newSubject);
+      return newSubject;
+    });
   }
   function handleCreditChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => ({
-      ...s,
-      credit: Number(event.target.value),
-    }));
+    setSubjectState((s) => {
+      const newSubject = {
+        ...s,
+        credit: Number(event.target.value),
+      };
+      onUpdateSubject(subject.id, newSubject);
+      return newSubject;
+    });
   }
   function handleGradeChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => ({
-      ...s,
-      grade: Number(event.target.value),
-    }));
+    setSubjectState((s) => {
+      const newSubject = {
+        ...s,
+        grade: Number(event.target.value),
+      };
+      onUpdateSubject(subject.id, newSubject);
+      return newSubject;
+    });
   }
-
-  useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-      return;
-    }
-    onUpdateSubject(subject.id, subjectState);
-  }, [subjectState]);
 
   return (
     <>
