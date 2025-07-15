@@ -104,6 +104,16 @@ function Home({ calculatorService, storageService }: HomeProps) {
   function deleteSubject(subjectId: string): void {
     updateSemesterSubjects(subjects.filter((item) => item.id !== subjectId));
   }
+
+  function moveSubject(fromIndex: number, toIndex: number): void {
+    console.log(`[Home.tsx] Dragged from ${fromIndex} to ${toIndex}`);
+    if (fromIndex === toIndex || toIndex - fromIndex === 1) return;
+    const newSubjects: Subject[] = [...subjects].filter(
+      (_, index) => index !== fromIndex
+    );
+    newSubjects.splice(toIndex, 0, subjects[fromIndex]);
+    updateSemesterSubjects(newSubjects);
+  }
   //#endregion Subjects
 
   return (
@@ -122,6 +132,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
         onAddSubject={addSubject}
         onUpdateSubject={updateSubject}
         onDeleteSubject={deleteSubject}
+        onMoveSubject={moveSubject}
       />
       <StatisticsDisplay calculatorService={calculatorService} />
     </>
