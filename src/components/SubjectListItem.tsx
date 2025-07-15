@@ -15,38 +15,29 @@ function SubjectListItem({
   const [subjectState, setSubjectState] = useState(subject);
 
   function handleCompletedChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => {
-      const newSubject = { ...s, completed: event.target.checked };
-      onUpdateSubject(subject.id, newSubject);
-      return newSubject;
-    });
+    setSubjectState((s) => ({ ...s, completed: event.target.checked }));
   }
+
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => {
-      const newSubject = { ...s, name: event.target.value };
-      onUpdateSubject(subject.id, newSubject);
-      return newSubject;
-    });
+    setSubjectState((s) => ({ ...s, name: event.target.value }));
   }
+
   function handleCreditChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => {
-      const newSubject = {
-        ...s,
-        credit: Number(event.target.value),
-      };
-      onUpdateSubject(subject.id, newSubject);
-      return newSubject;
-    });
+    setSubjectState((s) => ({
+      ...s,
+      credit: Number(event.target.value),
+    }));
   }
+
   function handleGradeChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSubjectState((s) => {
-      const newSubject = {
-        ...s,
-        grade: Number(event.target.value),
-      };
-      onUpdateSubject(subject.id, newSubject);
-      return newSubject;
-    });
+    setSubjectState((s) => ({
+      ...s,
+      grade: Number(event.target.value),
+    }));
+  }
+
+  function handleSave() {
+    onUpdateSubject(subject.id, subjectState);
   }
 
   return (
@@ -75,9 +66,10 @@ function SubjectListItem({
         value={subjectState.grade.toString()}
         onChange={handleGradeChange}
       />
+      <input type="button" value="Mentés" onClick={handleSave} />
       <input
         type="button"
-        value="Delete"
+        value="Törlés"
         onClick={() => onDeleteSubject(subject.id)}
       />
     </>
