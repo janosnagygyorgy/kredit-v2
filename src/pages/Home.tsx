@@ -65,6 +65,7 @@ function Home({ calculatorService, storageService }: HomeProps) {
 
   function moveSemester(fromIndex: number, toIndex: number): void {
     if (fromIndex === toIndex || toIndex - fromIndex === 1) return;
+    if (fromIndex < toIndex) toIndex--;
     const newData: StoredData = data.filter((_, index) => index !== fromIndex);
     newData.splice(toIndex, 0, data[fromIndex]);
     setData(() => newData);
@@ -106,8 +107,8 @@ function Home({ calculatorService, storageService }: HomeProps) {
   }
 
   function moveSubject(fromIndex: number, toIndex: number): void {
-    console.log(`[Home.tsx] Dragged from ${fromIndex} to ${toIndex}`);
     if (fromIndex === toIndex || toIndex - fromIndex === 1) return;
+    if (fromIndex < toIndex) toIndex--;
     const newSubjects: Subject[] = [...subjects].filter(
       (_, index) => index !== fromIndex
     );

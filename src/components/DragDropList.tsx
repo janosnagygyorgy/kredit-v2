@@ -16,10 +16,9 @@ function DragDropList({ onMoveItem, children }: DragDropListProps) {
   }
 
   function handleOnDrop(index: number) {
-    console.log(
-      `[DragDropList.tsx] Dragged from ${dragStartIndex.current} to ${index}`
-    );
+    if (dragStartIndex.current === -1) return;
     onMoveItem(dragStartIndex.current, index);
+    dragStartIndex.current = -1;
   }
 
   return (
