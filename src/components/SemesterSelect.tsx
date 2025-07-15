@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import SemesterList from "./SemesterList";
+import DragDropList from "./DragDropList";
 
 interface SemesterSelectProps {
   options: string[];
@@ -26,11 +26,19 @@ function SemesterSelect({
 
   return (
     <>
-      <SemesterList
-        options={options}
-        selectedSemester={selectedSemester}
-        handleSemesterChange={handleSemesterChange}
-        onMoveSemester={onMoveSemester}
+      <DragDropList
+        onMoveItem={onMoveSemester}
+        children={options.map((option, index) => (
+          <div
+            onClick={() => handleSemesterChange(option)}
+            style={{
+              backgroundColor: option === selectedSemester ? "red" : "",
+              cursor: "grab",
+            }}
+          >
+            {`${index}. ${option}`}
+          </div>
+        ))}
       />
       <button onClick={() => onDeleteSemester(selectedSemester)}>
         Félév törlése
