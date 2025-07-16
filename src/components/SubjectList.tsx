@@ -2,6 +2,7 @@ import type { Subject } from "../interfaces/Subject";
 import SubjectListItem from "./SubjectListItem";
 import SubjectListInput from "./SubjectListInput";
 import DragDropList from "./DragDropList";
+import type { DraggableItem } from "../interfaces/DraggableItem";
 
 interface SubjectListProps {
   subjects: Subject[];
@@ -23,13 +24,19 @@ function SubjectList({
       <SubjectListInput onAddSubject={onAddSubject} />
       <DragDropList
         onMoveItem={onMoveSubject}
-        children={subjects.map((subject) => (
-          <SubjectListItem
-            subject={subject}
-            onUpdateSubject={onUpdateSubject}
-            onDeleteSubject={onDeleteSubject}
-          />
-        ))}
+        items={subjects.map(
+          (subject) =>
+            ({
+              key: subject.id,
+              children: (
+                <SubjectListItem
+                  subject={subject}
+                  onUpdateSubject={onUpdateSubject}
+                  onDeleteSubject={onDeleteSubject}
+                />
+              ),
+            } as DraggableItem)
+        )}
       />
     </>
   );

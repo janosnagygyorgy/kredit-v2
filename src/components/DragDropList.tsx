@@ -1,14 +1,14 @@
-import { useRef, type ReactNode } from "react";
+import { useRef } from "react";
 import DropZone from "./DropZone";
 import DragDropOption from "./DragDropOption";
-import { v4 } from "uuid";
+import type { DraggableItem } from "../interfaces/DraggableItem";
 
 interface DragDropListProps {
   onMoveItem: (fromIndex: number, toIndex: number) => void;
-  children: ReactNode[];
+  items: DraggableItem[];
 }
 
-function DragDropList({ onMoveItem, children }: DragDropListProps) {
+function DragDropList({ onMoveItem, items }: DragDropListProps) {
   const dragStartIndex = useRef(-1);
 
   function handleDragStart(index: number) {
@@ -24,10 +24,10 @@ function DragDropList({ onMoveItem, children }: DragDropListProps) {
   return (
     <>
       <DropZone index={0} handleOnDrop={handleOnDrop} />
-      {children.map((child, index) => (
-        <div key={v4()}>
+      {items.map((item, index) => (
+        <div key={item.key}>
           <DragDropOption index={index} handleDragStart={handleDragStart}>
-            {child}
+            {item.children}
           </DragDropOption>
           <DropZone index={index + 1} handleOnDrop={handleOnDrop} />
         </div>
