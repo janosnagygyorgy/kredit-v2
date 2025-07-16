@@ -1,9 +1,15 @@
+import type { CalculatorServiceConfig } from "../interfaces/CalculatorServiceConfig";
 import type { StoredData } from "../interfaces/StoredData";
 import type { Subject } from "../interfaces/Subject";
 
 class CalculatorService {
   private data: StoredData = [];
   private selectedSemester: string = "";
+  public readonly config: CalculatorServiceConfig;
+
+  public constructor(config: CalculatorServiceConfig) {
+    this.config = config;
+  }
 
   public load(data: StoredData, selectedSemester: string): void {
     this.data = data;
