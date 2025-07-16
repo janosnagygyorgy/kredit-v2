@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Subject } from "../interfaces/Subject";
 
 interface SubjectListItemProps {
@@ -13,6 +13,7 @@ function SubjectListItem({
   onDeleteSubject,
 }: SubjectListItemProps) {
   const [subjectState, setSubjectState] = useState(subject);
+  const initialRender = useRef(true);
 
   function handleCompletedChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSubjectState((s) => ({ ...s, completed: event.target.checked }));
@@ -36,9 +37,13 @@ function SubjectListItem({
     }));
   }
 
-  function handleSave() {
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
     onUpdateSubject(subject.id, subjectState);
-  }
+  }, [subjectState]);
 
   return (
     <>
@@ -66,10 +71,9 @@ function SubjectListItem({
         value={subjectState.grade.toString()}
         onChange={handleGradeChange}
       />
-      <input type="button" value="Mentés" onClick={handleSave} />
       <input
         type="button"
-        value="Törlés"
+        value="Delete"
         onClick={() => onDeleteSubject(subject.id)}
       />
     </>
