@@ -33,6 +33,15 @@ function ImportExport() {
     reader.readAsText(file);
   }
 
+  function handleExport(data: string, filename: string, type: string) {
+    const file = new Blob([data], { type: type });
+
+    const exportLink = document.createElement("a");
+    exportLink.href = URL.createObjectURL(file);
+    exportLink.download = filename;
+    exportLink.click();
+  }
+
   return (
     <>
       <div
@@ -56,7 +65,9 @@ function ImportExport() {
         <input
           type="button"
           value="Export"
-          onClick={() => console.log("Export")}
+          onClick={() =>
+            handleExport("File content", "export.txt", "text/plain")
+          }
         />
       </div>
     </>
