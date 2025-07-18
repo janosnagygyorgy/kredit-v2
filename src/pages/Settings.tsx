@@ -1,3 +1,4 @@
+import ImportExport from "../components/ImportExport";
 import type { CalculatorServiceConfig } from "../interfaces/CalculatorServiceConfig";
 
 interface SettingsProps {
@@ -97,6 +98,8 @@ function Settings({ config, toggleSetting }: SettingsProps) {
         />
         Összesített korrigált kreditindex
       </div>
+
+      <ImportExport />
     </>
   );
 }
