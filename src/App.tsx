@@ -7,6 +7,7 @@ import StorageService from "./services/StorageService";
 import CalculatorService from "./services/CalculatorService";
 import type { CalculatorServiceConfig } from "./interfaces/CalculatorServiceConfig";
 import { useEffect, useState } from "react";
+import type { StoredData } from "./interfaces/StoredData";
 
 function App() {
   const storageService = new StorageService();
@@ -20,6 +21,12 @@ function App() {
     selectedSemester,
     config
   );
+
+  function handleImport(data: StoredData): void {
+    // TODO validate data
+    setData(() => data);
+    setSelectedSemester(data[0].name);
+  }
 
   function toggleSetting(setting: string): void {
     setConfig(
@@ -54,7 +61,14 @@ function App() {
           />
           <Route
             path="/settings"
-            element={<Settings config={config} toggleSetting={toggleSetting} />}
+            element={
+              <Settings
+                data={data}
+                onImport={handleImport}
+                config={config}
+                toggleSetting={toggleSetting}
+              />
+            }
           />
           <Route path="/help" element={<Help />} />
           <Route path="*" element={<Navigate replace to="/home" />} />

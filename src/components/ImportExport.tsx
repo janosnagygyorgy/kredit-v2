@@ -1,4 +1,11 @@
-function ImportExport() {
+import type { StoredData } from "../interfaces/StoredData";
+
+interface ImportExportProps {
+  data: StoredData;
+  onImport: (data: StoredData) => void;
+}
+
+function ImportExport({ data, onImport }: ImportExportProps) {
   const fileInput = document.createElement("input");
   fileInput.type = "file";
   fileInput.onchange = (e) => {
@@ -27,8 +34,8 @@ function ImportExport() {
       if (!event.target) return;
       const data = event.target?.result;
       if (typeof data !== "string") return;
-      // TODO: onImport(data);
       console.log(data);
+      onImport(JSON.parse(data) as StoredData);
     };
     reader.readAsText(file);
   }
@@ -46,8 +53,8 @@ function ImportExport() {
     <>
       <div
         style={{
-          height: "200px",
-          width: "500px",
+          height: "100px",
+          width: "300px",
           border: "1px dashed black",
           borderRadius: "20px",
           display: "flex",
@@ -58,7 +65,7 @@ function ImportExport() {
         onDrop={handleImportDrop}
         onDragOver={(e) => e.preventDefault()}
       >
-        Hi there
+        Húzz ide egy fájlt a betöltéshez
       </div>
 
       <div>
@@ -66,7 +73,7 @@ function ImportExport() {
           type="button"
           value="Export"
           onClick={() =>
-            handleExport("File content", "export.txt", "text/plain")
+            handleExport(JSON.stringify(data), "export.txt", "text/plain")
           }
         />
       </div>
