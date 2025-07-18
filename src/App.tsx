@@ -11,13 +11,25 @@ import { useEffect, useState } from "react";
 function App() {
   const storageService = new StorageService();
   const [config, setConfig] = useState(storageService.getConfig());
-  const calculatorService = new CalculatorService(config);
+  const [data, setData] = useState(storageService.getData());
+  const [selectedSemester, setSelectedSemester] = useState(
+    storageService.getSelectedSemester() ?? data[0].name
+  );
+  const calculatorService = new CalculatorService(
+    data,
+    selectedSemester,
+    config
+  );
 
   function toggleSetting(setting: string): void {
     setConfig(
       (c) => ({ ...c, [setting]: !c[setting] } as CalculatorServiceConfig)
     );
   }
+
+  useEffect(() => {
+    storageService.saveData(data, selectedSemester);
+  }, [data, selectedSemester]);
 
   useEffect(() => {
     storageService.saveConfig(config);
@@ -32,8 +44,11 @@ function App() {
             path="/Home"
             element={
               <Home
+                data={data}
+                setData={setData}
+                selectedSemester={selectedSemester}
+                setSelectedSemester={setSelectedSemester}
                 calculatorService={calculatorService}
-                storageService={storageService}
               />
             }
           />
