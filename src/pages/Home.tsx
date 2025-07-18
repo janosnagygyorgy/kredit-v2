@@ -1,4 +1,3 @@
-// import { useEffect, useState } from "react";
 import type { Subject } from "../interfaces/Subject";
 import type CalculatorService from "../services/CalculatorService";
 import SubjectList from "../components/SubjectList";
