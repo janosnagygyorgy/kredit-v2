@@ -1,33 +1,31 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import type { Subject } from "../interfaces/Subject";
 import type CalculatorService from "../services/CalculatorService";
-import type StorageService from "../services/StorageService";
 import SubjectList from "../components/SubjectList";
 import StatisticsDisplay from "../components/StatisticsDisplay";
 import SemesterSelect from "../components/SemesterSelect";
 import type { StoredData } from "../interfaces/StoredData";
 
 interface HomeProps {
+  data: StoredData;
+  setData: React.Dispatch<React.SetStateAction<StoredData>>;
+  selectedSemester: string;
+  setSelectedSemester: React.Dispatch<React.SetStateAction<string>>;
   calculatorService: CalculatorService;
-  storageService: StorageService;
 }
 
-function Home({ calculatorService, storageService }: HomeProps) {
-  const [data, setData] = useState(storageService.getData());
-  const [selectedSemester, setSelectedSemester] = useState(
-    storageService.getSelectedSemester() ?? data[0].name
-  );
+function Home({
+  data,
+  setData,
+  selectedSemester,
+  setSelectedSemester,
+  calculatorService,
+}: HomeProps) {
   const subjects =
     data.find((s) => s.name === selectedSemester)?.subjects ?? [];
   const date = new Date();
   const defaultSemesterName =
     date.getFullYear() + "/" + (date.getMonth() < 7 ? "2" : "1");
-
-  useEffect(() => {
-    storageService.saveData(data, selectedSemester);
-  }, [data, selectedSemester]);
-
-  calculatorService.load(data, selectedSemester);
 
   //#region Semesters
   function addSemester(newSemester: string): void {
