@@ -3,17 +3,18 @@ import type { StoredData } from "../interfaces/StoredData";
 import type { Subject } from "../interfaces/Subject";
 
 class CalculatorService {
-  private data: StoredData = [];
-  private selectedSemester: string = "";
+  private data: StoredData;
+  private selectedSemester: string;
   public readonly config: CalculatorServiceConfig;
 
-  public constructor(config: CalculatorServiceConfig) {
-    this.config = config;
-  }
-
-  public load(data: StoredData, selectedSemester: string): void {
+  public constructor(
+    data: StoredData,
+    selectedSemester: string,
+    config: CalculatorServiceConfig
+  ) {
     this.data = data;
     this.selectedSemester = selectedSemester;
+    this.config = config;
   }
 
   private getSemesterSubjects(semester: string): Subject[] {
