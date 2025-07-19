@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import type { DraggableItem } from "../../../components/DragDropList/DraggableItem";
-import DragDropList from "../../../components/DragDropList/DragDropList";
+import type { DraggableItem } from "components/DragDropList/DraggableItem";
+import DragDropList from "components/DragDropList/DragDropList";
 
 interface SemesterSelectProps {
   options: string[];

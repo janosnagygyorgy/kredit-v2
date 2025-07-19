@@ -1,6 +1,6 @@
 import ImportExport from "./components/ImportExport";
-import type { CalculatorServiceConfig } from "../../interfaces/CalculatorServiceConfig";
-import type { StoredData } from "../../interfaces/StoredData";
+import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredData } from "interfaces/StoredData";
 
 interface SettingsProps {
   data: StoredData;

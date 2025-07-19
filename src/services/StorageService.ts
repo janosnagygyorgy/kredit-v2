@@ -1,5 +1,5 @@
-import type { CalculatorServiceConfig } from "../interfaces/CalculatorServiceConfig";
-import type { StoredData } from "../interfaces/StoredData";
+import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredData } from "interfaces/StoredData";
 
 class StorageService {
   public getSelectedSemester(): string | null {

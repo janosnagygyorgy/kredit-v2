@@ -1,4 +1,4 @@
-import type { StoredData } from "../../../interfaces/StoredData";
+import type { StoredData } from "interfaces/StoredData";
 
 interface ImportExportProps {
   data: StoredData;

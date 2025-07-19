@@ -1,6 +1,6 @@
-import type { Subject } from "../../interfaces/Subject";
-import type { StoredData } from "../../interfaces/StoredData";
-import type CalculatorService from "../../services/CalculatorService";
+import type { Subject } from "interfaces/Subject";
+import type { StoredData } from "interfaces/StoredData";
+import type CalculatorService from "services/CalculatorService";
 import SubjectList from "./components/SubjectList/SubjectList";
 import StatisticsDisplay from "./components/StatisticsDisplay";
 import SemesterSelect from "./components/SemesterSelect";

@@ -1,6 +1,6 @@
-import type { CalculatorServiceConfig } from "../interfaces/CalculatorServiceConfig";
-import type { StoredData } from "../interfaces/StoredData";
-import type { Subject } from "../interfaces/Subject";
+import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredData } from "interfaces/StoredData";
+import type { Subject } from "interfaces/Subject";
 
 class CalculatorService {
   private data: StoredData;
