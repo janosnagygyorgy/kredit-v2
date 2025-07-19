@@ -1,13 +1,13 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useEffect, useState } from "react";
+import type { StoredData } from "./interfaces/StoredData";
+import type { CalculatorServiceConfig } from "./interfaces/CalculatorServiceConfig";
 import Navbar from "./components/Navbar";
 import Home from "./pages/home/Home";
 import Settings from "./pages/settings/Settings";
 import Help from "./pages/help/Help";
 import StorageService from "./services/StorageService";
 import CalculatorService from "./services/CalculatorService";
-import type { CalculatorServiceConfig } from "./interfaces/CalculatorServiceConfig";
-import { useEffect, useState } from "react";
-import type { StoredData } from "./interfaces/StoredData";
 
 function App() {
   const storageService = new StorageService();
