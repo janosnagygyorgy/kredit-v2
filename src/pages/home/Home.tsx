@@ -67,7 +67,6 @@ function Home({
     newData.splice(toIndex, 0, data[fromIndex]);
     setData(() => newData);
   }
-
   //#endregion Semesters
 
   //#region Subjects
