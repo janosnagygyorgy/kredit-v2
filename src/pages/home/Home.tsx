@@ -1,9 +1,9 @@
-import type { Subject } from "../interfaces/Subject";
-import type CalculatorService from "../services/CalculatorService";
-import SubjectList from "../components/SubjectList";
-import StatisticsDisplay from "../components/StatisticsDisplay";
-import SemesterSelect from "../components/SemesterSelect";
-import type { StoredData } from "../interfaces/StoredData";
+import type { Subject } from "../../interfaces/Subject";
+import type { StoredData } from "../../interfaces/StoredData";
+import type CalculatorService from "../../services/CalculatorService";
+import SubjectList from "./components/SubjectList";
+import StatisticsDisplay from "./components/StatisticsDisplay";
+import SemesterSelect from "./components/SemesterSelect";
 
 interface HomeProps {
   data: StoredData;

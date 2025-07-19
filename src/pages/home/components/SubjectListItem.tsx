@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { Subject } from "../interfaces/Subject";
+import type { Subject } from "../../../interfaces/Subject";
 
 interface SubjectListItemProps {
   subject: Subject;

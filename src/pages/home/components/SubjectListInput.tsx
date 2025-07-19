@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { v4 } from "uuid";
-import type { Subject } from "../interfaces/Subject";
+import type { Subject } from "../../../interfaces/Subject";
 
 interface SubjectListInputProps {
   onAddSubject: (subject: Subject) => void;

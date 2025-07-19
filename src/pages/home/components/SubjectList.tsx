@@ -1,8 +1,8 @@
-import type { Subject } from "../interfaces/Subject";
+import type { Subject } from "../../../interfaces/Subject";
 import SubjectListItem from "./SubjectListItem";
 import SubjectListInput from "./SubjectListInput";
-import DragDropList from "./DragDropList";
-import type { DraggableItem } from "../interfaces/DraggableItem";
+import DragDropList from "../../../components/DragDropList";
+import type { DraggableItem } from "../../../interfaces/DraggableItem";
 
 interface SubjectListProps {
   subjects: Subject[];
