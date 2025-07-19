@@ -1,7 +1,7 @@
 import { useRef } from "react";
+import type { DraggableItem } from "./DraggableItem";
 import DropZone from "./DropZone";
 import DragDropOption from "./DragDropOption";
-import type { DraggableItem } from "../interfaces/DraggableItem";
 
 interface DragDropListProps {
   onMoveItem: (fromIndex: number, toIndex: number) => void;

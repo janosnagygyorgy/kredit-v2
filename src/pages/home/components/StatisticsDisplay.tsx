@@ -1,4 +1,4 @@
-import type CalculatorService from "../services/CalculatorService";
+import type CalculatorService from "services/CalculatorService";
 
 interface StatisticsDisplayProps {
   calculatorService: CalculatorService;
