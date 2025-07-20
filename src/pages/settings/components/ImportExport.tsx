@@ -37,7 +37,6 @@ function ImportExport({ data, onImport }: ImportExportProps) {
       if (!event.target) return;
       const data = event.target?.result;
       if (typeof data !== "string") return;
-      console.log(data);
       onImport(JSON.parse(data) as StoredData);
     };
     reader.readAsText(file);
