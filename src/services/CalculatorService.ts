@@ -1,3 +1,5 @@
+import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { CalculatorServiceConfigItem } from "interfaces/CalculatorServiceConfigItem";
 import type { StoredConfig } from "interfaces/StoredConfig";
 import type { StoredData } from "interfaces/StoredData";
 import type { Subject } from "interfaces/Subject";
@@ -5,7 +7,78 @@ import type { Subject } from "interfaces/Subject";
 class CalculatorService {
   private data: StoredData;
   private selectedSemester: string;
-  public readonly config: StoredConfig;
+  public readonly config: CalculatorServiceConfig = {
+    semesterStatistics: [
+      {
+        key: "semesterTraditionalAverage",
+        enabled: true,
+        text: "Hagyományos átlag",
+        method: this.semesterTraditionalAverage,
+      },
+      {
+        key: "semesterWeightedAverage",
+        enabled: true,
+        text: "Súlyozott átlag",
+        method: this.semesterWeightedAverage,
+      },
+      {
+        key: "semesterCreditSum",
+        enabled: true,
+        text: "Felvett kredit",
+        method: this.semesterCreditSum,
+      },
+      {
+        key: "semesterCompletedCreditSum",
+        enabled: true,
+        text: "Teljesített kredit",
+        method: this.semesterCompletedCreditSum,
+      },
+      {
+        key: "semesterCreditIndex",
+        enabled: true,
+        text: "Kreditindex",
+        method: this.semesterCreditIndex,
+      },
+      {
+        key: "semesterCorrectedCreditIndex",
+        enabled: true,
+        text: "Korrigált kreditindex",
+        method: this.semesterCorrectedCreditIndex,
+      },
+    ],
+    cumulatedStatistics: [
+      {
+        key: "cumulatedTraditionalAverage",
+        enabled: true,
+        text: "Összesített hagyományos átlag",
+        method: this.cumulatedTraditionalAverage,
+      },
+      {
+        key: "cumulatedWeightedAverage",
+        enabled: true,
+        text: "Összesített súlyozott átlag",
+        method: this.cumulatedWeightedAverage,
+      },
+      {
+        key: "cumulatedCompletedCreditSum",
+        enabled: true,
+        text: "Összes teljesített kredit",
+        method: this.cumulatedCompletedCreditSum,
+      },
+      {
+        key: "cumulatedCreditIndex",
+        enabled: true,
+        text: "Összesített kreditindex",
+        method: this.cumulatedCreditIndex,
+      },
+      {
+        key: "cumulatedCorrectedCreditIndex",
+        enabled: true,
+        text: "Összesített korrigált kreditindex",
+        method: this.cumulatedCorrectedCreditIndex,
+      },
+    ],
+  };
 
   public constructor(
     data: StoredData,
@@ -14,7 +87,18 @@ class CalculatorService {
   ) {
     this.data = data;
     this.selectedSemester = selectedSemester;
-    this.config = config;
+    Object.entries(config).forEach(([key, value]) => {
+      const configItem = this.getConfigItem(key);
+      if (!configItem) return;
+      configItem.enabled = value;
+    });
+    console.log(this.config);
+  }
+
+  public getConfigItem(key: string): CalculatorServiceConfigItem | undefined {
+    return Object.values(this.config)
+      .flatMap((items) => items)
+      .find((item) => item.key === key);
   }
 
   private getSemesterSubjects(semester: string): Subject[] {

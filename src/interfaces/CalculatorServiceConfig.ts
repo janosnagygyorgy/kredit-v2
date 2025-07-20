@@ -1,3 +1,5 @@
-export interface CalculatorServiceConfig {
-  [key: string]: boolean;
-}
+import type { CalculatorServiceConfigItem } from "./CalculatorServiceConfigItem";
+
+export type CalculatorServiceConfig = {
+  [key: string]: CalculatorServiceConfigItem[];
+};
