@@ -63,7 +63,7 @@ function App() {
               <Settings
                 data={data}
                 onImport={handleImport}
-                config={config}
+                calculatorService={calculatorService}
                 toggleSetting={toggleSetting}
               />
             }

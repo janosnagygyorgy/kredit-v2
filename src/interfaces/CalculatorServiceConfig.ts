@@ -1,5 +1,5 @@
 import type { CalculatorServiceConfigItem } from "./CalculatorServiceConfigItem";
 
-export type CalculatorServiceConfig = {
+export interface CalculatorServiceConfig {
   [key: string]: CalculatorServiceConfigItem[];
-};
+}

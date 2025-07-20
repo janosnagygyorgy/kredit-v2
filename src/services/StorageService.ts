@@ -3,8 +3,7 @@ import type { StoredData } from "interfaces/StoredData";
 
 class StorageService {
   public getSelectedSemester(): string | null {
-    const selectedSemester = localStorage.getItem("selectedSemester");
-    return selectedSemester;
+    return localStorage.getItem("selectedSemester");
   }
 
   public getData(): StoredData {
