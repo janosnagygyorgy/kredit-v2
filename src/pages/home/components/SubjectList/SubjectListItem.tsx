@@ -46,7 +46,7 @@ function SubjectListItem({
   }, [subjectState]);
 
   return (
-    <>
+    <div className="cursor-grab active:cursor-grabbing">
       <div>{subjectState.id}</div>
       <input
         type="checkbox"
@@ -76,7 +76,7 @@ function SubjectListItem({
         value="Delete"
         onClick={() => onDeleteSubject(subject.id)}
       />
-    </>
+    </div>
   );
 }
 export default SubjectListItem;

@@ -26,7 +26,7 @@ function SemesterSelect({
   }
 
   return (
-    <>
+    <div className="w-1/2">
       <DragDropList
         onMoveItem={onMoveSemester}
         items={options.map(
@@ -36,10 +36,9 @@ function SemesterSelect({
               children: (
                 <div
                   onClick={() => handleSemesterChange(option)}
-                  style={{
-                    backgroundColor: option === selectedSemester ? "red" : "",
-                    cursor: "grab",
-                  }}
+                  className={`cursor-pointer active:cursor-grabbing ${
+                    option === selectedSemester ? "bg-red-300" : ""
+                  }`}
                 >
                   {`${index}. ${option}`}
                 </div>
@@ -61,7 +60,7 @@ function SemesterSelect({
       >
         Félév hozzáadása
       </button>
-    </>
+    </div>
   );
 }
 

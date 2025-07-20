@@ -1,4 +1,5 @@
 import type { StoredData } from "interfaces/StoredData";
+import { useState } from "react";
 
 interface ImportExportProps {
   data: StoredData;
@@ -6,6 +7,8 @@ interface ImportExportProps {
 }
 
 function ImportExport({ data, onImport }: ImportExportProps) {
+  const [isDraggedOver, setIsDraggedOver] = useState(false);
+
   const fileInput = document.createElement("input");
   fileInput.type = "file";
   fileInput.onchange = (e) => {
@@ -52,17 +55,17 @@ function ImportExport({ data, onImport }: ImportExportProps) {
   return (
     <>
       <div
-        style={{
-          height: "100px",
-          width: "300px",
-          border: "1px dashed black",
-          borderRadius: "20px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        className={`h-40 w-2xs flex justify-center items-center cursor-pointer
+          border-dashed border-1 rounded-2xl
+          transition-all duration-200 ease-in-out
+          ${isDraggedOver ? "bg-gray-200" : ""}`}
         onClick={handleImportClick}
-        onDrop={handleImportDrop}
+        onDragEnter={() => setIsDraggedOver(() => true)}
+        onDragLeave={() => setIsDraggedOver(() => false)}
+        onDrop={(e) => {
+          setIsDraggedOver(() => false);
+          handleImportDrop(e);
+        }}
         onDragOver={(e) => e.preventDefault()}
       >
         Húzz ide egy fájlt a betöltéshez
