@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { StoredData } from "./interfaces/StoredData";
-import type { CalculatorServiceConfig } from "./interfaces/CalculatorServiceConfig";
+import type { StoredConfig } from "./interfaces/StoredConfig";
 import Navbar from "./components/Navbar";
 import Home from "./pages/home/Home";
 import Settings from "./pages/settings/Settings";
@@ -29,9 +29,7 @@ function App() {
   }
 
   function toggleSetting(setting: string): void {
-    setConfig(
-      (c) => ({ ...c, [setting]: !c[setting] } as CalculatorServiceConfig)
-    );
+    setConfig((c) => ({ ...c, [setting]: !c[setting] } as StoredConfig));
   }
 
   useEffect(() => {
@@ -65,7 +63,7 @@ function App() {
               <Settings
                 data={data}
                 onImport={handleImport}
-                config={config}
+                calculatorService={calculatorService}
                 toggleSetting={toggleSetting}
               />
             }

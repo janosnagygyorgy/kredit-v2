@@ -39,7 +39,7 @@ function SubjectListInput({ onAddSubject }: SubjectListInputProps) {
       />
       <input
         type="button"
-        value="Add"
+        value="Hozzáadás"
         onClick={() => {
           onAddSubject({
             id: v4(),

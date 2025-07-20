@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+input {
+  @apply border-solid border-1 m-0.5 p-0.5 rounded-sm;
+}

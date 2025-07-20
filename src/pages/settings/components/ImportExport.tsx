@@ -7,7 +7,7 @@ interface ImportExportProps {
 }
 
 function ImportExport({ data, onImport }: ImportExportProps) {
-  const [isDraggedOver, setIsDraggedOver] = useState(false);
+  const [active, setActive] = useState(false);
 
   const fileInput = document.createElement("input");
   fileInput.type = "file";
@@ -37,7 +37,6 @@ function ImportExport({ data, onImport }: ImportExportProps) {
       if (!event.target) return;
       const data = event.target?.result;
       if (typeof data !== "string") return;
-      console.log(data);
       onImport(JSON.parse(data) as StoredData);
     };
     reader.readAsText(file);
@@ -58,12 +57,12 @@ function ImportExport({ data, onImport }: ImportExportProps) {
         className={`h-40 w-2xs flex justify-center items-center cursor-pointer
           border-dashed border-1 rounded-2xl
           transition-all duration-200 ease-in-out
-          ${isDraggedOver ? "bg-gray-200" : ""}`}
+          ${active ? "bg-gray-200" : ""}`}
         onClick={handleImportClick}
-        onDragEnter={() => setIsDraggedOver(() => true)}
-        onDragLeave={() => setIsDraggedOver(() => false)}
+        onDragEnter={() => setActive(() => true)}
+        onDragLeave={() => setActive(() => false)}
         onDrop={(e) => {
-          setIsDraggedOver(() => false);
+          setActive(() => false);
           handleImportDrop(e);
         }}
         onDragOver={(e) => e.preventDefault()}
