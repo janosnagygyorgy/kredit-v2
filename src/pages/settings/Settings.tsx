@@ -1,12 +1,12 @@
 import ImportExport from "./components/ImportExport";
-import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredConfig } from "interfaces/StoredConfig";
 import type { StoredData } from "interfaces/StoredData";
 import CalculationSettings from "./components/CalculationSettings";
 
 interface SettingsProps {
   data: StoredData;
   onImport: (data: StoredData) => void;
-  config: CalculatorServiceConfig;
+  config: StoredConfig;
   toggleSetting: (setting: string) => void;
 }
 

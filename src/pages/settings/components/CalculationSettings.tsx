@@ -1,7 +1,7 @@
-import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredConfig } from "interfaces/StoredConfig";
 
 interface CalculationSettingsProps {
-  config: CalculatorServiceConfig;
+  config: StoredConfig;
   toggleSetting: (setting: string) => void;
 }
 

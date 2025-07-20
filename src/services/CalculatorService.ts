@@ -1,16 +1,16 @@
-import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredConfig } from "interfaces/StoredConfig";
 import type { StoredData } from "interfaces/StoredData";
 import type { Subject } from "interfaces/Subject";
 
 class CalculatorService {
   private data: StoredData;
   private selectedSemester: string;
-  public readonly config: CalculatorServiceConfig;
+  public readonly config: StoredConfig;
 
   public constructor(
     data: StoredData,
     selectedSemester: string,
-    config: CalculatorServiceConfig
+    config: StoredConfig
   ) {
     this.data = data;
     this.selectedSemester = selectedSemester;

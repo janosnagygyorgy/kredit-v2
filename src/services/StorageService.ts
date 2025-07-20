@@ -1,4 +1,4 @@
-import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredConfig } from "interfaces/StoredConfig";
 import type { StoredData } from "interfaces/StoredData";
 
 class StorageService {
@@ -23,7 +23,7 @@ class StorageService {
     console.log(data);
   }
 
-  public getConfig(): CalculatorServiceConfig {
+  public getConfig(): StoredConfig {
     const config = localStorage.getItem("config");
     if (!config) {
       return {
@@ -43,7 +43,7 @@ class StorageService {
     return JSON.parse(config);
   }
 
-  public saveConfig(config: CalculatorServiceConfig): void {
+  public saveConfig(config: StoredConfig): void {
     localStorage.setItem("config", JSON.stringify(config));
     console.log(config);
   }
