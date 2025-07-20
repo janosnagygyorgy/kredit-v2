@@ -28,11 +28,18 @@ function SemesterSelect({
 
   return (
     <div className="w-1/2 p-2 border-1 border-solid rounded-sm">
-      <div
-        className="bg-gray-200 select-none"
-        onClick={() => setActive(() => !active)}
-      >
-        {selectedSemester}
+      <div className="flex items-center bg-gray-200 select-none">
+        <div
+          className="mx-2 cursor-pointer"
+          onClick={() => setActive(() => !active)}
+        >
+          {selectedSemester}
+        </div>
+        <input
+          type="button"
+          value="Félév törlése"
+          onClick={() => onDeleteSemester(selectedSemester)}
+        />
       </div>
       <div
         className="grid transition-all duration-300 ease-in-out"
@@ -60,21 +67,18 @@ function SemesterSelect({
           />
         </div>
       </div>
-      <input
-        type="button"
-        value="Félév törlése"
-        onClick={() => onDeleteSemester(selectedSemester)}
-      />
-      <input type="text" ref={addSemesterInput} />
-      <input
-        type="button"
-        value="Félév hozzáadása"
-        onClick={() => {
-          if (!addSemesterInput.current) return;
-          onAddSemester(addSemesterInput.current.value);
-          addSemesterInput.current.value = "";
-        }}
-      />
+      <div className="flex items-center">
+        <input type="text" ref={addSemesterInput} />
+        <input
+          type="button"
+          value="Félév hozzáadása"
+          onClick={() => {
+            if (!addSemesterInput.current) return;
+            onAddSemester(addSemesterInput.current.value);
+            addSemesterInput.current.value = "";
+          }}
+        />
+      </div>
     </div>
   );
 }
