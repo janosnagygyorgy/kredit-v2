@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+html,
+body {
+  @apply h-full m-0 bg-white text-black dark:bg-[#1e1e1e] dark:text-[#d4d4d4];
+}
+
+body:not(.no-transition) {
+  @apply transition-colors duration-500;
+}
+
 input {
   @apply border-solid border-1 m-0.5 p-0.5 rounded-sm;
 }

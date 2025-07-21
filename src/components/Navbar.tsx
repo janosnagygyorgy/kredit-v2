@@ -4,7 +4,7 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="flex bg-blue-100 p-1">
+      <div className="flex p-1">
         <NavigationLink to="/home">Főoldal</NavigationLink>
         <NavigationLink to="/settings">Beállítások</NavigationLink>
         <NavigationLink to="/help">Súgó</NavigationLink>

@@ -27,13 +27,13 @@ function SemesterSelect({
   }
 
   return (
-    <div className="w-1/2 p-2 border-1 border-solid rounded-sm">
-      <div className="flex items-center bg-gray-200 select-none">
+    <div className="w-1/2 p-2 border-1 border-solid rounded-md">
+      <div className="flex items-center border-1 border-solid rounded-sm select-none">
         <div
           className="mx-2 cursor-pointer"
           onClick={() => setActive(() => !active)}
         >
-          {selectedSemester}
+          {selectedSemester + (active ? "-" : "+")}
         </div>
         <input
           type="button"
@@ -56,7 +56,9 @@ function SemesterSelect({
                     <div
                       onClick={() => handleSemesterChange(option)}
                       className={`cursor-pointer active:cursor-grabbing ${
-                        option === selectedSemester ? "bg-red-300" : ""
+                        option === selectedSemester
+                          ? "bg-red-300 dark:bg-red-900"
+                          : ""
                       }`}
                     >
                       {`${index}. ${option}`}

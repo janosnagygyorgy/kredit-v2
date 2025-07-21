@@ -2,12 +2,13 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { StoredData } from "./interfaces/StoredData";
 import type { StoredConfig } from "./interfaces/StoredConfig";
-import Navbar from "./components/Navbar";
+import StorageService from "./services/StorageService";
+import CalculatorService from "./services/CalculatorService";
 import Home from "./pages/home/Home";
 import Settings from "./pages/settings/Settings";
 import Help from "./pages/help/Help";
-import StorageService from "./services/StorageService";
-import CalculatorService from "./services/CalculatorService";
+import Navbar from "./components/Navbar";
+import ThemeSelector from "components/ThemeSelector";
 
 function App() {
   const storageService = new StorageService();
@@ -32,6 +33,28 @@ function App() {
     setConfig((c) => ({ ...c, [setting]: !c[setting] } as StoredConfig));
   }
 
+  function setTheme(theme: string): void {
+    switch (theme) {
+      case "light":
+      case "dark":
+        localStorage.theme = theme;
+        break;
+      default:
+        localStorage.removeItem("theme");
+        break;
+    }
+    document.documentElement.classList.toggle(
+      "dark",
+      localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+    );
+  }
+
+  useEffect(() => {
+    document.body.classList.remove("no-transition");
+  }, []);
+
   useEffect(() => {
     storageService.saveData(data, selectedSemester);
   }, [data, selectedSemester]);
@@ -41,7 +64,8 @@ function App() {
   }, [config]);
 
   return (
-    <>
+    <div>
+      <ThemeSelector setTheme={setTheme} />
       <Navbar />
       <div>
         <Routes>
@@ -72,7 +96,7 @@ function App() {
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
       </div>
-    </>
+    </div>
   );
 }
 
