@@ -24,7 +24,13 @@ function Home({
     data.find((s) => s.name === selectedSemester)?.subjects ?? [];
   const date = new Date();
   const defaultSemesterName =
-    date.getFullYear() + "/" + (date.getMonth() < 7 ? "2" : "1");
+    date.getMonth() < 9
+      ? `${date.getFullYear() - 1}/${date.getFullYear().toString().slice(-2)}/${
+          date.getMonth() < 2 ? 1 : 2
+        }`
+      : `${date.getFullYear()}/${(date.getFullYear() + 1)
+          .toString()
+          .slice(-2)}/1`;
 
   //#region Semesters
   function addSemester(newSemester: string): void {
@@ -36,7 +42,13 @@ function Home({
       alert("Már létezik ilyen félév.");
       return;
     }
-    setData((d) => [...d, { name: newSemester, subjects: [] }] as StoredData);
+    setData(
+      (d) =>
+        [
+          ...d,
+          { name: newSemester, included: true, subjects: [] },
+        ] as StoredData
+    );
     changeSemester(newSemester);
   }
 
@@ -53,7 +65,7 @@ function Home({
         () =>
           [
             ...newData,
-            { name: defaultSemesterName, subjects: [] },
+            { name: defaultSemesterName, included: true, subjects: [] },
           ] as StoredData
       );
       changeSemester(defaultSemesterName);
@@ -70,6 +82,12 @@ function Home({
   //#endregion Semesters
 
   //#region Subjects
+  function toggleSemesterIncluded(semester: string): void {
+    setData((d) =>
+      d.map((s) => (s.name === semester ? { ...s, included: !s.included } : s))
+    );
+  }
+
   function updateSemesterSubjects(
     subjects: Subject[],
     semester: string = selectedSemester
@@ -117,10 +135,11 @@ function Home({
     <>
       <h1>Kreditindex kalkulátor</h1>
       <SemesterSelect
-        options={data.map((s) => s.name)}
+        options={data.map((s) => s)}
         selectedSemester={selectedSemester}
         onAddSemester={addSemester}
         onChangeSelectedSemester={changeSemester}
+        onToggleSemesterIncluded={toggleSemesterIncluded}
         onDeleteSemester={deleteSemester}
         onMoveSemester={moveSemester}
       />

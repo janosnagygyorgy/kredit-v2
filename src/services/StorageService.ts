@@ -10,8 +10,8 @@ class StorageService {
     const data = localStorage.getItem("data");
     if (!data)
       return [
-        { name: "Semester1", subjects: [] },
-        { name: "Semester2", subjects: [] },
+        { name: "Semester1", included: true, subjects: [] },
+        { name: "Semester2", included: true, subjects: [] },
       ];
     return JSON.parse(data);
   }
