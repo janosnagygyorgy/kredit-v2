@@ -57,7 +57,7 @@ function ImportExport({ data, onImport }: ImportExportProps) {
         className={`h-40 w-2xs flex justify-center items-center cursor-pointer
           border-dashed border-1 rounded-2xl
           transition-all duration-200 ease-in-out
-          ${active ? "bg-gray-200" : ""}`}
+          ${active ? "bg-shadow" : ""}`}
         onClick={handleImportClick}
         onDragEnter={() => setActive(() => true)}
         onDragLeave={() => setActive(() => false)}

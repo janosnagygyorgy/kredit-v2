@@ -24,8 +24,8 @@ function NavigationLink({ to, children }: NavigationLinkProps) {
 
   return (
     <div
-      className={`rounded-lg p-2 text-white mx-1
-        ${isActive ? "bg-blue-950" : "bg-blue-400"}`}
+      className={`rounded-lg p-2 mx-1 text-link-text
+        ${isActive ? "bg-primary" : "bg-link-background"}`}
     >
       <Link to={to}>{children}</Link>
     </div>

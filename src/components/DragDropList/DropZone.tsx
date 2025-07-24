@@ -16,10 +16,10 @@ function DropZone({ index, handleOnDrop }: DropZoneProps) {
         handleOnDrop(index);
       }}
       onDragOver={(e) => e.preventDefault()}
-      className={`text-center text-xs m-0.5
+      className={`flex items-center justify-center text-xs m-0.5
         border-dashed border-1 rounded-sm select-none
         transition-all duration-100 ease-in-out
-        ${isDraggedOver ? "h-5" : "h-2 opacity-0"}`}
+        ${isDraggedOver ? "h-5" : "h-1.5 opacity-0"}`}
     >
       Áthelyezés
     </div>

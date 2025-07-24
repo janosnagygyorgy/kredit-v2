@@ -5,9 +5,13 @@ interface ThemeSelectorProps {
 function ThemeSelector({ setTheme }: ThemeSelectorProps) {
   return (
     <div>
-      <input type="button" value="Light" onClick={() => setTheme("light")} />
-      <input type="button" value="Dark" onClick={() => setTheme("dark")} />
-      <input type="button" value="System" onClick={() => setTheme("system")} />
+      <input
+        type="button"
+        value="☀️Világos"
+        onClick={() => setTheme("light")}
+      />
+      <input type="button" value="🌙Sötét" onClick={() => setTheme("dark")} />
+      <input type="button" value="💻Alap" onClick={() => setTheme("system")} />
     </div>
   );
 }

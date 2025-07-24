@@ -46,8 +46,7 @@ function SubjectListItem({
   }, [subjectState]);
 
   return (
-    <div className="p-1 border-solid border-1 rounded-md cursor-grab active:cursor-grabbing">
-      <div>{subjectState.id}</div>
+    <div className="flex items-center p-1 border-solid border-1 rounded-md bg-shadow cursor-grab active:cursor-grabbing">
       <input
         type="checkbox"
         checked={subjectState.completed}
@@ -56,12 +55,14 @@ function SubjectListItem({
       <input
         type="text"
         value={subjectState.name}
+        className="w-full"
         onChange={handleNameChange}
       />
       <input
         type="number"
         min={0}
         value={subjectState.credit.toString()}
+        className="w-8"
         onChange={handleCreditChange}
       />
       <input
@@ -69,11 +70,13 @@ function SubjectListItem({
         min={1}
         max={5}
         value={subjectState.grade.toString()}
+        className="w-8"
         onChange={handleGradeChange}
       />
       <input
         type="button"
         value="Törlés"
+        className="w-15"
         onClick={() => onDeleteSubject(subject.id)}
       />
     </div>

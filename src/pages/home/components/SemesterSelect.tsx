@@ -30,59 +30,61 @@ function SemesterSelect({
   }
 
   return (
-    <div className="w-1/2 p-2 border-1 border-solid rounded-md">
-      <div className="flex items-center border-1 border-solid rounded-sm select-none">
-        <div
-          className="mx-2 cursor-pointer"
-          onClick={() => setActive(() => !active)}
-        >
-          {selectedSemester + (active ? "-" : "+")}
-        </div>
-        <input
-          type="button"
-          value="Félév törlése"
-          onClick={() => onDeleteSemester(selectedSemester)}
-        />
-      </div>
-      <div
-        className="grid transition-all duration-300 ease-in-out"
-        style={{ gridTemplateRows: active ? "1fr" : "0fr" }}
-      >
-        <div className="overflow-hidden">
-          <DragDropList
-            onMoveItem={onMoveSemester}
-            items={options.map(
-              (option) =>
-                ({
-                  key: option.name,
-                  children: (
-                    <div
-                      onClick={(e) => {
-                        if (!(e.target instanceof HTMLInputElement))
-                          handleSemesterChange(option.name);
-                      }}
-                      className={`cursor-pointer active:cursor-grabbing ${
-                        option.name === selectedSemester
-                          ? "bg-red-300 dark:bg-red-900"
-                          : ""
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={option.included}
-                        onChange={() => {
-                          onToggleSemesterIncluded(option.name);
-                        }}
-                      />
-                      {option.name}
-                    </div>
-                  ),
-                } as DraggableItem)
-            )}
+    <div className="w-1/3 p-2 border-1 border-solid rounded-md bg-shadow">
+      <div className="mb-2 p-1 border-1 border-solid rounded-md">
+        <div className="flex items-center p-0.5 rounded-sm select-none">
+          <div
+            className="mx-2 cursor-pointer"
+            onClick={() => setActive(() => !active)}
+          >
+            {selectedSemester + (active ? "-" : "+")}
+          </div>
+          <input
+            type="button"
+            value="Félév törlése"
+            onClick={() => onDeleteSemester(selectedSemester)}
           />
         </div>
+        <div
+          className="grid transition-all duration-300 ease-in-out"
+          style={{ gridTemplateRows: active ? "1fr" : "0fr" }}
+        >
+          <div className="overflow-hidden">
+            <DragDropList
+              onMoveItem={onMoveSemester}
+              items={options.map(
+                (option) =>
+                  ({
+                    key: option.name,
+                    children: (
+                      <div
+                        onClick={(e) => {
+                          if (!(e.target instanceof HTMLInputElement))
+                            handleSemesterChange(option.name);
+                        }}
+                        className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing ${
+                          option.name === selectedSemester
+                            ? "bg-primary text-link-text"
+                            : "bg-shadow-highlight"
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={option.included}
+                          onChange={() => {
+                            onToggleSemesterIncluded(option.name);
+                          }}
+                        />
+                        {option.name}
+                      </div>
+                    ),
+                  } as DraggableItem)
+              )}
+            />
+          </div>
+        </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center m-0 p-0">
         <input type="text" ref={addSemesterInput} />
         <input
           type="button"

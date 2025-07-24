@@ -2,15 +2,50 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-background: hsl(60, 17%, 98%);
+  --color-text: hsl(0, 0%, 0%);
+  --color-primary: hsl(15, 63%, 60%);
+
+  --color-link-text: hsl(0, 0%, 100%);
+  --color-link-background: hsl(15, 63%, 70%);
+
+  --color-shadow: hsl(0, 0%, 90%);
+  --color-shadow-highlight: hsl(0, 0%, 82%);
+
+  /* --font-sans: "Segoe UI" */
+  --font-mono: monospace;
+}
+
 html,
 body {
-  @apply h-full m-0 bg-white text-black dark:bg-[#1e1e1e] dark:text-[#d4d4d4];
+  @apply h-full m-0;
+}
+
+body {
+  @apply p-2 bg-background text-text font-mono text-sm tabular-nums;
+
+  @variant dark {
+    --color-background: hsl(0, 0%, 14%);
+    --color-text: hsl(0, 0%, 83%);
+    --color-primary: hsl(15, 63%, 40%);
+
+    --color-shadow: hsl(0, 0%, 18%);
+    --color-shadow-highlight: hsl(0, 0%, 21%);
+
+    --color-link-background: hsl(15, 63%, 60%);
+  }
 }
 
 body:not(.no-transition) {
-  @apply transition-colors duration-500;
+  @apply transition-colors duration-400;
 }
 
 input {
-  @apply border-solid border-1 m-0.5 p-0.5 rounded-sm;
+  @apply border-solid border-1 m-0.5 p-1 rounded-sm;
+}
+
+input[type="button"],
+input[type="checkbox"] {
+  @apply cursor-pointer;
 }
