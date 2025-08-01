@@ -1,18 +1,17 @@
-import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { StoredConfig } from "interfaces/StoredConfig";
 import type { StoredData } from "interfaces/StoredData";
 
 class StorageService {
   public getSelectedSemester(): string | null {
-    const selectedSemester = localStorage.getItem("selectedSemester");
-    return selectedSemester;
+    return localStorage.getItem("selectedSemester");
   }
 
   public getData(): StoredData {
     const data = localStorage.getItem("data");
     if (!data)
       return [
-        { name: "Semester1", subjects: [] },
-        { name: "Semester2", subjects: [] },
+        { name: "Semester1", included: true, subjects: [] },
+        { name: "Semester2", included: true, subjects: [] },
       ];
     return JSON.parse(data);
   }
@@ -23,7 +22,7 @@ class StorageService {
     console.log(data);
   }
 
-  public getConfig(): CalculatorServiceConfig {
+  public getConfig(): StoredConfig {
     const config = localStorage.getItem("config");
     if (!config) {
       return {
@@ -43,7 +42,7 @@ class StorageService {
     return JSON.parse(config);
   }
 
-  public saveConfig(config: CalculatorServiceConfig): void {
+  public saveConfig(config: StoredConfig): void {
     localStorage.setItem("config", JSON.stringify(config));
     console.log(config);
   }

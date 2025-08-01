@@ -1,24 +1,111 @@
 import type { CalculatorServiceConfig } from "interfaces/CalculatorServiceConfig";
+import type { CalculatorServiceConfigItem } from "interfaces/CalculatorServiceConfigItem";
+import type { StoredConfig } from "interfaces/StoredConfig";
 import type { StoredData } from "interfaces/StoredData";
 import type { Subject } from "interfaces/Subject";
 
 class CalculatorService {
   private data: StoredData;
   private selectedSemester: string;
-  public readonly config: CalculatorServiceConfig;
+  public readonly config: CalculatorServiceConfig = {
+    semesterStatistics: [
+      {
+        key: "semesterTraditionalAverage",
+        enabled: true,
+        text: "Hagyományos átlag",
+        method: () => this.semesterTraditionalAverage(),
+      },
+      {
+        key: "semesterWeightedAverage",
+        enabled: true,
+        text: "Súlyozott átlag",
+        method: () => this.semesterWeightedAverage(),
+      },
+      {
+        key: "semesterCreditSum",
+        enabled: true,
+        text: "Felvett kredit",
+        method: () => this.semesterCreditSum(),
+      },
+      {
+        key: "semesterCompletedCreditSum",
+        enabled: true,
+        text: "Teljesített kredit",
+        method: () => this.semesterCompletedCreditSum(),
+      },
+      {
+        key: "semesterCreditIndex",
+        enabled: true,
+        text: "Kreditindex",
+        method: () => this.semesterCreditIndex(),
+      },
+      {
+        key: "semesterCorrectedCreditIndex",
+        enabled: true,
+        text: "Korrigált kreditindex",
+        method: () => this.semesterCorrectedCreditIndex(),
+      },
+    ],
+    cumulatedStatistics: [
+      {
+        key: "cumulatedTraditionalAverage",
+        enabled: true,
+        text: "Összesített hagyományos átlag",
+        method: () => this.cumulatedTraditionalAverage(),
+      },
+      {
+        key: "cumulatedWeightedAverage",
+        enabled: true,
+        text: "Összesített súlyozott átlag",
+        method: () => this.cumulatedWeightedAverage(),
+      },
+      {
+        key: "cumulatedCompletedCreditSum",
+        enabled: true,
+        text: "Összes teljesített kredit",
+        method: () => this.cumulatedCompletedCreditSum(),
+      },
+      {
+        key: "cumulatedCreditIndex",
+        enabled: true,
+        text: "Összesített kreditindex",
+        method: () => this.cumulatedCreditIndex(),
+      },
+      {
+        key: "cumulatedCorrectedCreditIndex",
+        enabled: true,
+        text: "Összesített korrigált kreditindex",
+        method: () => this.cumulatedCorrectedCreditIndex(),
+      },
+    ],
+  };
 
   public constructor(
     data: StoredData,
     selectedSemester: string,
-    config: CalculatorServiceConfig
+    config: StoredConfig
   ) {
     this.data = data;
     this.selectedSemester = selectedSemester;
-    this.config = config;
+    Object.entries(config).forEach(([key, value]) => {
+      const configItem = this.getConfigItem(key);
+      if (!configItem) return;
+      configItem.enabled = value;
+    });
+  }
+
+  public getConfigItem(key: string): CalculatorServiceConfigItem | undefined {
+    return Object.values(this.config)
+      .flatMap((items) => items)
+      .find((item) => item.key === key);
   }
 
   private getSemesterSubjects(semester: string): Subject[] {
     return this.data.find((s) => s.name === semester)?.subjects ?? [];
+  }
+
+  private round(value: number, decimals: number): number {
+    return Math.round(value * 10 ** decimals) / 10 ** decimals;
   }
 
   //#region Semester statistics
@@ -64,14 +151,18 @@ class CalculatorService {
 
   // Hagyományos átlag
   public semesterTraditionalAverage(): number {
-    return this.semesterGradeSum() / this.semesterNumberOfSubjects();
+    return this.round(
+      this.semesterGradeSum() / this.semesterNumberOfSubjects(),
+      2
+    );
   }
 
   // Súlyozott átlag
   public semesterWeightedAverage(): number {
-    return (
+    return this.round(
       this.semesterCompletedCreditGradeProductSum() /
-      this.semesterCompletedCreditSum()
+        this.semesterCompletedCreditSum(),
+      2
     );
   }
 
@@ -94,14 +185,15 @@ class CalculatorService {
 
   // Kreditindex
   public semesterCreditIndex(): number {
-    return this.semesterCompletedCreditGradeProductSum() / 30;
+    return this.round(this.semesterCompletedCreditGradeProductSum() / 30, 2);
   }
 
   // Korrigált kreditindex
   public semesterCorrectedCreditIndex(): number {
-    return (
+    return this.round(
       this.semesterCreditIndex() *
-      (this.semesterCompletedCreditSum() / this.semesterCreditSum())
+        (this.semesterCompletedCreditSum() / this.semesterCreditSum()),
+      2
     );
   }
   //#endregion Semester statistics
@@ -110,7 +202,8 @@ class CalculatorService {
   public cumulatedCreditSum(): number {
     let sum = 0;
     for (let i = 0; i < this.data.length; i++) {
-      sum += this.semesterCreditSum(this.data[i].name);
+      if (this.data[i].included)
+        sum += this.semesterCreditSum(this.data[i].name);
       if (this.data[i].name === this.selectedSemester) break;
     }
     return sum;
@@ -121,11 +214,13 @@ class CalculatorService {
     let gradeSum = 0;
     let numberOfSubjects = 0;
     for (let i = 0; i < this.data.length; i++) {
-      gradeSum += this.semesterGradeSum(this.data[i].name);
-      numberOfSubjects += this.semesterNumberOfSubjects(this.data[i].name);
+      if (this.data[i].included) {
+        gradeSum += this.semesterGradeSum(this.data[i].name);
+        numberOfSubjects += this.semesterNumberOfSubjects(this.data[i].name);
+      }
       if (this.data[i].name === this.selectedSemester) break;
     }
-    return gradeSum / numberOfSubjects;
+    return this.round(gradeSum / numberOfSubjects, 2);
   }
 
   // Összesített súlyozott átlag
@@ -133,20 +228,25 @@ class CalculatorService {
     let creditGradeProductSum = 0;
     let completedCreditSum = 0;
     for (let i = 0; i < this.data.length; i++) {
-      creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
-        this.data[i].name
-      );
-      completedCreditSum += this.semesterCompletedCreditSum(this.data[i].name);
+      if (this.data[i].included) {
+        creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
+          this.data[i].name
+        );
+        completedCreditSum += this.semesterCompletedCreditSum(
+          this.data[i].name
+        );
+      }
       if (this.data[i].name === this.selectedSemester) break;
     }
-    return creditGradeProductSum / completedCreditSum;
+    return this.round(creditGradeProductSum / completedCreditSum, 2);
   }
 
   // Összes teljesített kredit
   public cumulatedCompletedCreditSum(): number {
     let sum = 0;
     for (let i = 0; i < this.data.length; i++) {
-      sum += this.semesterCompletedCreditSum(this.data[i].name);
+      if (this.data[i].included)
+        sum += this.semesterCompletedCreditSum(this.data[i].name);
       if (this.data[i].name === this.selectedSemester) break;
     }
     return sum;
@@ -157,20 +257,23 @@ class CalculatorService {
     let creditGradeProductSum = 0;
     let semesterCounter = 0;
     for (let i = 0; i < this.data.length; i++) {
-      semesterCounter++;
-      creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
-        this.data[i].name
-      );
+      if (this.data[i].included) {
+        semesterCounter++;
+        creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
+          this.data[i].name
+        );
+      }
       if (this.data[i].name === this.selectedSemester) break;
     }
-    return creditGradeProductSum / (semesterCounter * 30);
+    return this.round(creditGradeProductSum / (semesterCounter * 30), 2);
   }
 
   // Összesített korrigált kreditindex
   public cumulatedCorrectedCreditIndex(): number {
-    return (
+    return this.round(
       this.cumulatedCreditIndex() *
-      (this.cumulatedCompletedCreditSum() / this.cumulatedCreditSum())
+        (this.cumulatedCompletedCreditSum() / this.cumulatedCreditSum()),
+      2
     );
   }
 

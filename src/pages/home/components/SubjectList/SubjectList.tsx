@@ -20,25 +20,27 @@ function SubjectList({
   onMoveSubject,
 }: SubjectListProps) {
   return (
-    <>
+    <div className="w-2xl mb-2 mr-5 p-2 border-1 border-solid rounded-md">
       <SubjectListInput onAddSubject={onAddSubject} />
-      <DragDropList
-        onMoveItem={onMoveSubject}
-        items={subjects.map(
-          (subject) =>
-            ({
-              key: subject.id,
-              children: (
-                <SubjectListItem
-                  subject={subject}
-                  onUpdateSubject={onUpdateSubject}
-                  onDeleteSubject={onDeleteSubject}
-                />
-              ),
-            } as DraggableItem)
-        )}
-      />
-    </>
+      <div className="px-2 py-0 border-solid border-1 rounded-md">
+        <DragDropList
+          onMoveItem={onMoveSubject}
+          items={subjects.map(
+            (subject) =>
+              ({
+                key: subject.id,
+                children: (
+                  <SubjectListItem
+                    subject={subject}
+                    onUpdateSubject={onUpdateSubject}
+                    onDeleteSubject={onDeleteSubject}
+                  />
+                ),
+              } as DraggableItem)
+          )}
+        />
+      </div>
+    </div>
   );
 }
 

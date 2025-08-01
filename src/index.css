@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: hsl(60, 17%, 98%);
+  --color-text: hsl(0, 0%, 0%);
+  --color-primary: hsl(15, 63%, 60%);
+
+  --color-link-text: hsl(0, 0%, 100%);
+  --color-link-background: hsl(15, 63%, 70%);
+
+  --color-shadow: hsl(0, 0%, 95%);
+  --color-highlight: hsl(0, 0%, 88%);
+
+  --color-success: hsl(134, 41%, 40%);
+  --color-warning: hsl(354, 61%, 45%);
+
+  --font-mono: monospace;
+}
+
+html,
+body {
+  @apply h-full m-0;
+}
+
+body {
+  @apply p-0 bg-background text-text font-mono text-sm tabular-nums;
+
+  @variant dark {
+    --color-background: hsl(0, 0%, 18%);
+    --color-text: hsl(0, 0%, 83%);
+    --color-primary: hsl(15, 63%, 40%);
+
+    --color-link-background: hsl(15, 63%, 60%);
+
+    --color-shadow: hsl(0, 0%, 14%);
+    --color-highlight: hsl(0, 0%, 21%);
+  }
+}
+
+body:not(.no-transition) *:not(.no-global-transition) {
+  @apply transition-colors duration-400;
+}
+
+h1 {
+  @apply text-3xl font-bold;
+}
+
+h2 {
+  @apply text-lg font-bold;
+}
+
+h3 {
+  @apply font-bold;
+}
+
+input {
+  @apply border-solid border-1 m-0.5 p-1 rounded-sm;
+}
+
+input[type="button"],
+input[type="checkbox"] {
+  @apply cursor-pointer;
+}

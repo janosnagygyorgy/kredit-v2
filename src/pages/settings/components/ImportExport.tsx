@@ -1,4 +1,5 @@
 import type { StoredData } from "interfaces/StoredData";
+import { useState } from "react";
 
 interface ImportExportProps {
   data: StoredData;
@@ -6,6 +7,8 @@ interface ImportExportProps {
 }
 
 function ImportExport({ data, onImport }: ImportExportProps) {
+  const [active, setActive] = useState(false);
+
   const fileInput = document.createElement("input");
   fileInput.type = "file";
   fileInput.onchange = (e) => {
@@ -34,7 +37,6 @@ function ImportExport({ data, onImport }: ImportExportProps) {
       if (!event.target) return;
       const data = event.target?.result;
       if (typeof data !== "string") return;
-      console.log(data);
       onImport(JSON.parse(data) as StoredData);
     };
     reader.readAsText(file);
@@ -50,24 +52,24 @@ function ImportExport({ data, onImport }: ImportExportProps) {
   }
 
   return (
-    <>
+    <div>
+      <h2>Tárgyak importálása/exportálása</h2>
       <div
-        style={{
-          height: "100px",
-          width: "300px",
-          border: "1px dashed black",
-          borderRadius: "20px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        className={`h-40 w-2xs flex justify-center items-center my-1 cursor-pointer
+          border-dashed border-1 rounded-2xl
+          transition-all duration-200 no-global-transition ease-in-out
+          ${active ? "bg-shadow" : ""}`}
         onClick={handleImportClick}
-        onDrop={handleImportDrop}
+        onDragEnter={() => setActive(() => true)}
+        onDragLeave={() => setActive(() => false)}
+        onDrop={(e) => {
+          setActive(() => false);
+          handleImportDrop(e);
+        }}
         onDragOver={(e) => e.preventDefault()}
       >
         Húzz ide egy fájlt a betöltéshez
       </div>
-
       <div>
         <input
           type="button"
@@ -77,7 +79,7 @@ function ImportExport({ data, onImport }: ImportExportProps) {
           }
         />
       </div>
-    </>
+    </div>
   );
 }
 

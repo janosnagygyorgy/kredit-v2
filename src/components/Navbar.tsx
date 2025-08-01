@@ -4,11 +4,11 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 function Navbar() {
   return (
     <nav className="navbar">
-      <ul>
+      <div className="flex p-1">
         <NavigationLink to="/home">Főoldal</NavigationLink>
         <NavigationLink to="/settings">Beállítások</NavigationLink>
         <NavigationLink to="/help">Súgó</NavigationLink>
-      </ul>
+      </div>
     </nav>
   );
 }
@@ -23,9 +23,12 @@ function NavigationLink({ to, children }: NavigationLinkProps) {
   const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
   return (
-    <li className={isActive ? "active" : ""}>
+    <div
+      className={`rounded-lg p-2 mx-1 text-link-text
+        ${isActive ? "bg-primary" : "bg-link-background"}`}
+    >
       <Link to={to}>{children}</Link>
-    </li>
+    </div>
   );
 }
 

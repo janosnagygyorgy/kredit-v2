@@ -1,13 +1,14 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { StoredData } from "./interfaces/StoredData";
-import type { CalculatorServiceConfig } from "./interfaces/CalculatorServiceConfig";
-import Navbar from "./components/Navbar";
+import type { StoredConfig } from "./interfaces/StoredConfig";
+import StorageService from "./services/StorageService";
+import CalculatorService from "./services/CalculatorService";
 import Home from "./pages/home/Home";
 import Settings from "./pages/settings/Settings";
 import Help from "./pages/help/Help";
-import StorageService from "./services/StorageService";
-import CalculatorService from "./services/CalculatorService";
+import Navbar from "./components/Navbar";
+import ThemeSelector from "components/ThemeSelector";
 
 function App() {
   const storageService = new StorageService();
@@ -29,10 +30,30 @@ function App() {
   }
 
   function toggleSetting(setting: string): void {
-    setConfig(
-      (c) => ({ ...c, [setting]: !c[setting] } as CalculatorServiceConfig)
+    setConfig((c) => ({ ...c, [setting]: !c[setting] } as StoredConfig));
+  }
+
+  function setTheme(theme: string): void {
+    switch (theme) {
+      case "light":
+      case "dark":
+        localStorage.theme = theme;
+        break;
+      default:
+        localStorage.removeItem("theme");
+        break;
+    }
+    document.documentElement.classList.toggle(
+      "dark",
+      localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
     );
   }
+
+  useEffect(() => {
+    document.body.classList.remove("no-transition");
+  }, []);
 
   useEffect(() => {
     storageService.saveData(data, selectedSemester);
@@ -43,9 +64,13 @@ function App() {
   }, [config]);
 
   return (
-    <>
-      <Navbar />
-      <div>
+    <div>
+      <div className="px-10 py-2 bg-shadow border-b-1">
+        <h1>Kreditindex kalkulátor</h1>
+        <ThemeSelector setTheme={setTheme} />
+        <Navbar />
+      </div>
+      <div className="px-10 py-2 bg-background">
         <Routes>
           <Route
             path="/Home"
@@ -65,7 +90,7 @@ function App() {
               <Settings
                 data={data}
                 onImport={handleImport}
-                config={config}
+                calculatorService={calculatorService}
                 toggleSetting={toggleSetting}
               />
             }
@@ -74,7 +99,7 @@ function App() {
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
       </div>
-    </>
+    </div>
   );
 }
 
