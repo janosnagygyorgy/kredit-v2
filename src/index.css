@@ -39,7 +39,7 @@ body {
   }
 }
 
-body:not(.no-transition) {
+body:not(.no-transition) *:not(.no-global-transition) {
   @apply transition-colors duration-400;
 }
 

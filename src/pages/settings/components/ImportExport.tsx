@@ -52,11 +52,12 @@ function ImportExport({ data, onImport }: ImportExportProps) {
   }
 
   return (
-    <>
+    <div>
+      <h2>Tárgyak importálása/exportálása</h2>
       <div
-        className={`h-40 w-2xs flex justify-center items-center cursor-pointer
+        className={`h-40 w-2xs flex justify-center items-center my-1 cursor-pointer
           border-dashed border-1 rounded-2xl
-          transition-all duration-200 ease-in-out
+          transition-all duration-200 no-global-transition ease-in-out
           ${active ? "bg-shadow" : ""}`}
         onClick={handleImportClick}
         onDragEnter={() => setActive(() => true)}
@@ -69,7 +70,6 @@ function ImportExport({ data, onImport }: ImportExportProps) {
       >
         Húzz ide egy fájlt a betöltéshez
       </div>
-
       <div>
         <input
           type="button"
@@ -79,7 +79,7 @@ function ImportExport({ data, onImport }: ImportExportProps) {
           }
         />
       </div>
-    </>
+    </div>
   );
 }
 

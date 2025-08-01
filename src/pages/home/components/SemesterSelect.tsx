@@ -46,7 +46,7 @@ function SemesterSelect({
           />
         </div>
         <div
-          className="grid transition-all duration-300 ease-in-out"
+          className="grid transition-all duration-300 no-global-transition ease-in-out"
           style={{ gridTemplateRows: active ? "1fr" : "0fr" }}
         >
           <div className="overflow-hidden">
