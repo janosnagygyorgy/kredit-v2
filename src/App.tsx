@@ -65,9 +65,12 @@ function App() {
 
   return (
     <div>
-      <ThemeSelector setTheme={setTheme} />
-      <Navbar />
-      <div>
+      <div className="px-10 py-2 bg-shadow border-b-1">
+        <h1>Kreditindex kalkulátor</h1>
+        <ThemeSelector setTheme={setTheme} />
+        <Navbar />
+      </div>
+      <div className="px-10 py-2 bg-background">
         <Routes>
           <Route
             path="/Home"

@@ -133,7 +133,6 @@ function Home({
 
   return (
     <>
-      <h1>Kreditindex kalkulátor</h1>
       <SemesterSelect
         options={data.map((s) => s)}
         selectedSemester={selectedSemester}
@@ -143,14 +142,16 @@ function Home({
         onDeleteSemester={deleteSemester}
         onMoveSemester={moveSemester}
       />
-      <SubjectList
-        subjects={subjects}
-        onAddSubject={addSubject}
-        onUpdateSubject={updateSubject}
-        onDeleteSubject={deleteSubject}
-        onMoveSubject={moveSubject}
-      />
-      <StatisticsDisplay calculatorService={calculatorService} />
+      <div className="flex flex-wrap mt-5">
+        <SubjectList
+          subjects={subjects}
+          onAddSubject={addSubject}
+          onUpdateSubject={updateSubject}
+          onDeleteSubject={deleteSubject}
+          onMoveSubject={moveSubject}
+        />
+        <StatisticsDisplay calculatorService={calculatorService} />
+      </div>
     </>
   );
 }

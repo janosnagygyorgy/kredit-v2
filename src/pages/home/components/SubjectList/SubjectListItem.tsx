@@ -76,7 +76,7 @@ function SubjectListItem({
       <input
         type="button"
         value="Törlés"
-        className="w-15"
+        className="w-15 text-white border-black bg-warning"
         onClick={() => onDeleteSubject(subject.id)}
       />
     </div>

@@ -30,9 +30,9 @@ function SemesterSelect({
   }
 
   return (
-    <div className="w-1/3 p-2 border-1 border-solid rounded-md bg-shadow">
+    <div className="w-5/6 max-w-lg p-2 border-1 border-solid rounded-md bg-shadow">
       <div className="mb-2 p-1 border-1 border-solid rounded-md">
-        <div className="flex items-center p-0.5 rounded-sm select-none">
+        <div className="flex flex-wrap items-center p-0.5 rounded-sm select-none">
           <div
             className="mx-2 cursor-pointer"
             onClick={() => setActive(() => !active)}
@@ -65,7 +65,7 @@ function SemesterSelect({
                         className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing ${
                           option.name === selectedSemester
                             ? "bg-primary text-link-text"
-                            : "bg-shadow-highlight"
+                            : "bg-highlight"
                         }`}
                       >
                         <input
@@ -85,7 +85,7 @@ function SemesterSelect({
         </div>
       </div>
       <div className="flex items-center m-0 p-0">
-        <input type="text" ref={addSemesterInput} />
+        <input type="text" className="w-full" ref={addSemesterInput} />
         <input
           type="button"
           value="Félév hozzáadása"

@@ -13,7 +13,7 @@ function SubjectListInput({ onAddSubject }: SubjectListInputProps) {
   const [inputGrade, setInputGrade] = useState(5);
 
   return (
-    <div className="flex items-center p-1 my-4 border-solid border-1 rounded-md bg-shadow cursor-grab active:cursor-grabbing">
+    <div className="flex items-center p-1 mb-4 border-solid border-1 rounded-md bg-shadow cursor-grab active:cursor-grabbing">
       <input
         type="checkbox"
         checked={inputCompleted}
@@ -43,7 +43,7 @@ function SubjectListInput({ onAddSubject }: SubjectListInputProps) {
       <input
         type="button"
         value="Hozzáadás"
-        className="w-20"
+        className="w-20 bg-success text-white border-black"
         onClick={() => {
           onAddSubject({
             id: v4(),
