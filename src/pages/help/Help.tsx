@@ -1,4 +1,5 @@
 import "./Help.css";
+import Tex2SVG from "react-hook-mathjax";
 
 function Help() {
   return (
@@ -6,43 +7,20 @@ function Help() {
       <h1>Súgó</h1>
       <h2>Féléves statisztikák</h2>
       <h3>Hagyományos átlag</h3>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <ms>érdemjegy</ms>
-            </mrow>
-          </mrow>
-          <mrow>
-            <ms>tárgyak_darabszáma</ms>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{érdemjegy}}{\text{tárgyak_darabszáma}}"
+        />
+      </p>
 
       <h3>Súlyozott átlag</h3>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <mo>(</mo>
-              <mrow>
-                <ms>teljesített_kredit</ms>
-                <mo>*</mo>
-                <ms>érdemjegy</ms>
-              </mrow>
-              <mo>)</mo>
-            </mrow>
-          </mrow>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <ms>teljesített_kredit</ms>
-            </mrow>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{(teljesített_kredit} \cdot \text{érdemjegy)}}{\sum \text{teljesített_kredit}}"
+        />
+      </p>
 
       <h3>Felvett kredit</h3>
       <p>A félévben felvett tárgy kreditjeinek összege.</p>
@@ -53,151 +31,54 @@ function Help() {
       </p>
 
       <h3>Kreditindex</h3>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <mo>(</mo>
-              <mrow>
-                <ms>teljesített_kredit</ms>
-                <mo>*</mo>
-                <ms>érdemjegy</ms>
-              </mrow>
-              <mo>)</mo>
-            </mrow>
-          </mrow>
-          <mrow>
-            <mn>30</mn>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{(teljesített_kredit} \cdot \text{érdemjegy)}}{30}"
+        />
+      </p>
 
       <h3>Korrigált kreditindex</h3>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <mo>(</mo>
-              <mrow>
-                <ms>teljesített_kredit</ms>
-                <mo>*</mo>
-                <ms>érdemjegy</ms>
-              </mrow>
-              <mo>)</mo>
-            </mrow>
-          </mrow>
-          <mrow>
-            <mn>30</mn>
-          </mrow>
-        </mfrac>
-        <mo>*</mo>
-        <mfrac>
-          <mrow>
-            <ms>teljesített_kredit</ms>
-          </mrow>
-          <mrow>
-            <ms>felvett_kredit</ms>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{(teljesített_kredit} \cdot \text{érdemjegy)}}{30} \cdot \frac{\text{teljesített_kredit}}{\text{felvett_kredit}}"
+        />
+      </p>
 
       <h2>Összesített (halmozott) statisztikák</h2>
       <h3>Összesített hagyományos átlag</h3>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <ms>összes_érdemjegy</ms>
-            </mrow>
-          </mrow>
-          <mrow>
-            <ms>összes_tárgy_darabszáma</ms>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{összes_érdemjegy}}{\text{összes_tárgy_darabszáma}}"
+        />
+      </p>
 
       <h3>Összesített súlyozott átlag</h3>
       <p>Neptunban "Halmozott átlag"</p>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <mo>(</mo>
-              <mrow>
-                <ms>összes_teljesített_kredit</ms>
-                <mo>*</mo>
-                <ms>összes_érdemjegy</ms>
-              </mrow>
-              <mo>)</mo>
-            </mrow>
-          </mrow>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <ms>összes_teljesített_kredit</ms>
-            </mrow>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{(összes_teljesített_kredit} \cdot \text{összes_érdemjegy)}}{\sum \text{összes_teljesített_kredit}}"
+        />
+      </p>
 
       <h3>Összesített kreditindex</h3>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <mo>(</mo>
-              <mrow>
-                <ms>összes_teljesített_kredit</ms>
-                <mo>*</mo>
-                <ms>összes_érdemjegy</ms>
-              </mrow>
-              <mo>)</mo>
-            </mrow>
-          </mrow>
-          <mrow>
-            <ms>aktív_félévek_száma</ms>
-            <mo>*</mo>
-            <mn>30</mn>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{(összes_teljesített_kredit} \cdot \text{összes_érdemjegy})}{\text{aktív_félévek_száma} \cdot 30}"
+        />
+      </p>
 
       <h3>Összesített korrigált kreditindex</h3>
-      <math>
-        <mfrac>
-          <mrow>
-            <mo>&sum;</mo>
-            <mrow>
-              <mo>(</mo>
-              <mrow>
-                <ms>összes_teljesített_kredit</ms>
-                <mo>*</mo>
-                <ms>összes_érdemjegy</ms>
-              </mrow>
-              <mo>)</mo>
-            </mrow>
-          </mrow>
-          <mrow>
-            <ms>aktív_félévek_száma</ms>
-            <mo>*</mo>
-            <mn>30</mn>
-          </mrow>
-        </mfrac>
-        <mo>*</mo>
-        <mfrac>
-          <mrow>
-            <ms>összes_teljesített_kredit</ms>
-          </mrow>
-          <mrow>
-            <ms>összes_felvett_kredit</ms>
-          </mrow>
-        </mfrac>
-      </math>
+      <p>
+        <Tex2SVG
+          display="inline"
+          latex="\frac{\sum \text{(összes_teljesített_kredit} \cdot \text{összes_érdemjegy})}{\text{aktív_félévek_száma} \cdot 30} \cdot \frac{\text{összes_teljesített_kredit}}{\text{összes_felvett_kredit}}"
+        />
+      </p>
 
       <h3>Összes teljesített kredit</h3>
       <p>A félévek során felvett összes tárgy kreditjeinek összege.</p>
