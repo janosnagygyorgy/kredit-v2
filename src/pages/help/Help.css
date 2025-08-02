@@ -4,11 +4,6 @@ h3 {
   @apply mt-2 mb-1;
 }
 
-math,
 p {
   @apply mb-3;
-}
-
-math {
-  @apply text-lg;
 }
