@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import type { StoredData } from "./interfaces/StoredData";
 import type { StoredConfig } from "./interfaces/StoredConfig";
 import StorageService from "./services/StorageService";
@@ -99,6 +100,7 @@ function App() {
           <Route path="*" element={<Navigate replace to="/home" />} />
         </Routes>
       </div>
+      <Analytics />
     </div>
   );
 }
