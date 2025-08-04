@@ -4,6 +4,7 @@ import type CalculatorService from "services/CalculatorService";
 import SubjectList from "./components/SubjectList/SubjectList";
 import StatisticsDisplay from "./components/StatisticsDisplay";
 import SemesterSelect from "./components/SemesterSelect";
+import { v4 } from "uuid";
 
 interface HomeProps {
   data: StoredData;
@@ -46,7 +47,7 @@ function Home({
       (d) =>
         [
           ...d,
-          { name: newSemester, included: true, subjects: [] },
+          { id: v4(), name: newSemester, included: true, subjects: [] },
         ] as StoredData
     );
     changeSemester(newSemester);
@@ -65,7 +66,12 @@ function Home({
         () =>
           [
             ...newData,
-            { name: defaultSemesterName, included: true, subjects: [] },
+            {
+              id: v4(),
+              name: defaultSemesterName,
+              included: true,
+              subjects: [],
+            },
           ] as StoredData
       );
       changeSemester(defaultSemesterName);

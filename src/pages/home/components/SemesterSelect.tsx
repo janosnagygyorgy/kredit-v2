@@ -51,7 +51,7 @@ function SemesterSelect({
               items={options.map(
                 (option) =>
                   ({
-                    key: option.name,
+                    key: option.id,
                     children: (
                       <div
                         onClick={(e) => {
