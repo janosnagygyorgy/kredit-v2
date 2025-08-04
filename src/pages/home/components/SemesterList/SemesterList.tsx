@@ -4,7 +4,7 @@ import DragDropList from "components/DragDropList/DragDropList";
 import type { Semester } from "interfaces/Semester";
 import SemesterListItem from "./SemesterListItem";
 
-interface SemesterSelectProps {
+interface SemesterListProps {
   options: Semester[];
   selectedSemester: string;
   onAddSemester: (newSemester: string) => void;
@@ -15,7 +15,7 @@ interface SemesterSelectProps {
   onMoveSemester: (fromIndex: number, toIndex: number) => void;
 }
 
-function SemesterSelect({
+function SemesterList({
   options,
   selectedSemester,
   onAddSemester,
@@ -24,7 +24,7 @@ function SemesterSelect({
   onUpdateSemesterName,
   onDeleteSemester,
   onMoveSemester,
-}: SemesterSelectProps) {
+}: SemesterListProps) {
   const addSemesterInput = useRef<HTMLInputElement>(null);
   const [active, setActive] = useState(true);
 
@@ -36,8 +36,8 @@ function SemesterSelect({
             className="mx-2 cursor-pointer"
             onClick={() => setActive(() => !active)}
           >
-            {options.find((s) => s.id === selectedSemester)?.name +
-              (active ? "-" : "+")}
+            {options.find((s) => s.id === selectedSemester)?.name ??
+              "" + (active ? "-" : "+")}
           </div>
           <input
             type="button"
@@ -87,4 +87,4 @@ function SemesterSelect({
   );
 }
 
-export default SemesterSelect;
+export default SemesterList;
