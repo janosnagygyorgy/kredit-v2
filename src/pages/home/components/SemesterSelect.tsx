@@ -11,7 +11,7 @@ interface SemesterSelectProps {
   onChangeSelectedSemester: (selectedSemester: string) => void;
   onToggleSemesterIncluded: (semester: string) => void;
   onUpdateSemesterName: (semesterId: string, name: string) => void;
-  onDeleteSemester: (semesterToDelete: string) => void;
+  onDeleteSemester: (semesterIdToDelete: string) => void;
   onMoveSemester: (fromIndex: number, toIndex: number) => void;
 }
 
@@ -36,7 +36,8 @@ function SemesterSelect({
             className="mx-2 cursor-pointer"
             onClick={() => setActive(() => !active)}
           >
-            {selectedSemester + (active ? "-" : "+")}
+            {options.find((s) => s.id === selectedSemester)?.name +
+              (active ? "-" : "+")}
           </div>
           <input
             type="button"
@@ -58,7 +59,7 @@ function SemesterSelect({
                     children: (
                       <SemesterListItem
                         semester={option}
-                        isSelected={option.name === selectedSemester}
+                        isSelected={option.id === selectedSemester}
                         onChangeSelectedSemester={onChangeSelectedSemester}
                         onToggleSemesterIncluded={onToggleSemesterIncluded}
                         onUpdateSemesterName={onUpdateSemesterName}

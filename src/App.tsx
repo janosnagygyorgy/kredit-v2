@@ -16,7 +16,7 @@ function App() {
   const [config, setConfig] = useState(storageService.getConfig());
   const [data, setData] = useState(storageService.getData());
   const [selectedSemester, setSelectedSemester] = useState(
-    storageService.getSelectedSemester() ?? data[0].name
+    storageService.getSelectedSemester() ?? data[0].id
   );
   const calculatorService = new CalculatorService(
     data,
@@ -27,7 +27,7 @@ function App() {
   function handleImport(data: StoredData): void {
     // TODO validate data
     setData(() => data);
-    setSelectedSemester(data[0].name);
+    setSelectedSemester(data[0].id);
   }
 
   function toggleSetting(setting: string): void {

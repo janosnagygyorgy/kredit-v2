@@ -101,7 +101,7 @@ class CalculatorService {
   }
 
   private getSemesterSubjects(semester: string): Subject[] {
-    return this.data.find((s) => s.name === semester)?.subjects ?? [];
+    return this.data.find((s) => s.id === semester)?.subjects ?? [];
   }
 
   private round(value: number, decimals: number): number {
@@ -202,9 +202,8 @@ class CalculatorService {
   public cumulatedCreditSum(): number {
     let sum = 0;
     for (let i = 0; i < this.data.length; i++) {
-      if (this.data[i].included)
-        sum += this.semesterCreditSum(this.data[i].name);
-      if (this.data[i].name === this.selectedSemester) break;
+      if (this.data[i].included) sum += this.semesterCreditSum(this.data[i].id);
+      if (this.data[i].id === this.selectedSemester) break;
     }
     return sum;
   }
@@ -215,10 +214,10 @@ class CalculatorService {
     let numberOfSubjects = 0;
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].included) {
-        gradeSum += this.semesterGradeSum(this.data[i].name);
-        numberOfSubjects += this.semesterNumberOfSubjects(this.data[i].name);
+        gradeSum += this.semesterGradeSum(this.data[i].id);
+        numberOfSubjects += this.semesterNumberOfSubjects(this.data[i].id);
       }
-      if (this.data[i].name === this.selectedSemester) break;
+      if (this.data[i].id === this.selectedSemester) break;
     }
     return this.round(gradeSum / numberOfSubjects, 2);
   }
@@ -230,13 +229,11 @@ class CalculatorService {
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].included) {
         creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
-          this.data[i].name
+          this.data[i].id
         );
-        completedCreditSum += this.semesterCompletedCreditSum(
-          this.data[i].name
-        );
+        completedCreditSum += this.semesterCompletedCreditSum(this.data[i].id);
       }
-      if (this.data[i].name === this.selectedSemester) break;
+      if (this.data[i].id === this.selectedSemester) break;
     }
     return this.round(creditGradeProductSum / completedCreditSum, 2);
   }
@@ -246,8 +243,8 @@ class CalculatorService {
     let sum = 0;
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].included)
-        sum += this.semesterCompletedCreditSum(this.data[i].name);
-      if (this.data[i].name === this.selectedSemester) break;
+        sum += this.semesterCompletedCreditSum(this.data[i].id);
+      if (this.data[i].id === this.selectedSemester) break;
     }
     return sum;
   }
@@ -260,10 +257,10 @@ class CalculatorService {
       if (this.data[i].included) {
         semesterCounter++;
         creditGradeProductSum += this.semesterCompletedCreditGradeProductSum(
-          this.data[i].name
+          this.data[i].id
         );
       }
-      if (this.data[i].name === this.selectedSemester) break;
+      if (this.data[i].id === this.selectedSemester) break;
     }
     return this.round(creditGradeProductSum / (semesterCounter * 30), 2);
   }

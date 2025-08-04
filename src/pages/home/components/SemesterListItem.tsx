@@ -17,17 +17,17 @@ function SemesterListItem({
   onUpdateSemesterName,
 }: SemesterListItemProps) {
   const [semesterName, setSemesterName] = useState(semester.name);
-  // const initialRender = useRef(true);
+  const initialRender = useRef(true);
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSemesterName(() => event.target.value);
   }
 
   useEffect(() => {
-    // if (initialRender.current) {
-    //   initialRender.current = false;
-    //   return;
-    // }
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
     onUpdateSemesterName(semester.id, semesterName);
   }, [semesterName]);
 
@@ -35,7 +35,7 @@ function SemesterListItem({
     <div
       onClick={(e) => {
         if (!(e.target instanceof HTMLInputElement))
-          onChangeSelectedSemester(semester.name);
+          onChangeSelectedSemester(semester.id);
       }}
       className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing ${
         isSelected ? "bg-primary text-link-text" : "bg-highlight"
