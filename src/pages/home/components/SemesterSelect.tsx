@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import type { DraggableItem } from "components/DragDropList/DraggableItem";
 import DragDropList from "components/DragDropList/DragDropList";
 import type { Semester } from "interfaces/Semester";
+import SemesterListItem from "./SemesterListItem";
 
 interface SemesterSelectProps {
   options: Semester[];
@@ -9,7 +10,8 @@ interface SemesterSelectProps {
   onAddSemester: (newSemester: string) => void;
   onChangeSelectedSemester: (selectedSemester: string) => void;
   onToggleSemesterIncluded: (semester: string) => void;
-  onDeleteSemester: (semesterToDelete: string) => void;
+  onUpdateSemesterName: (semesterId: string, name: string) => void;
+  onDeleteSemester: (semesterIdToDelete: string) => void;
   onMoveSemester: (fromIndex: number, toIndex: number) => void;
 }
 
@@ -19,15 +21,12 @@ function SemesterSelect({
   onAddSemester,
   onChangeSelectedSemester,
   onToggleSemesterIncluded,
+  onUpdateSemesterName,
   onDeleteSemester,
   onMoveSemester,
 }: SemesterSelectProps) {
   const addSemesterInput = useRef<HTMLInputElement>(null);
   const [active, setActive] = useState(true);
-
-  function handleSemesterChange(semester: string) {
-    onChangeSelectedSemester(semester);
-  }
 
   return (
     <div className="w-5/6 max-w-lg p-2 border-1 border-solid rounded-md bg-shadow">
@@ -37,7 +36,8 @@ function SemesterSelect({
             className="mx-2 cursor-pointer"
             onClick={() => setActive(() => !active)}
           >
-            {selectedSemester + (active ? "-" : "+")}
+            {options.find((s) => s.id === selectedSemester)?.name +
+              (active ? "-" : "+")}
           </div>
           <input
             type="button"
@@ -55,28 +55,15 @@ function SemesterSelect({
               items={options.map(
                 (option) =>
                   ({
-                    key: option.name,
+                    key: option.id,
                     children: (
-                      <div
-                        onClick={(e) => {
-                          if (!(e.target instanceof HTMLInputElement))
-                            handleSemesterChange(option.name);
-                        }}
-                        className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing ${
-                          option.name === selectedSemester
-                            ? "bg-primary text-link-text"
-                            : "bg-highlight"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={option.included}
-                          onChange={() => {
-                            onToggleSemesterIncluded(option.name);
-                          }}
-                        />
-                        {option.name}
-                      </div>
+                      <SemesterListItem
+                        semester={option}
+                        isSelected={option.id === selectedSemester}
+                        onChangeSelectedSemester={onChangeSelectedSemester}
+                        onToggleSemesterIncluded={onToggleSemesterIncluded}
+                        onUpdateSemesterName={onUpdateSemesterName}
+                      />
                     ),
                   } as DraggableItem)
               )}

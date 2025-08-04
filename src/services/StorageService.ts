@@ -1,5 +1,6 @@
 import type { StoredConfig } from "interfaces/StoredConfig";
 import type { StoredData } from "interfaces/StoredData";
+import { v4 } from "uuid";
 
 class StorageService {
   public getSelectedSemester(): string | null {
@@ -10,8 +11,8 @@ class StorageService {
     const data = localStorage.getItem("data");
     if (!data)
       return [
-        { name: "Semester1", included: true, subjects: [] },
-        { name: "Semester2", included: true, subjects: [] },
+        { id: v4(), name: "Semester1", included: true, subjects: [] },
+        { id: v4(), name: "Semester2", included: true, subjects: [] },
       ];
     return JSON.parse(data);
   }

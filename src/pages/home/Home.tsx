@@ -4,6 +4,7 @@ import type CalculatorService from "services/CalculatorService";
 import SubjectList from "./components/SubjectList/SubjectList";
 import StatisticsDisplay from "./components/StatisticsDisplay";
 import SemesterSelect from "./components/SemesterSelect";
+import { v4 } from "uuid";
 
 interface HomeProps {
   data: StoredData;
@@ -20,8 +21,7 @@ function Home({
   setSelectedSemester,
   calculatorService,
 }: HomeProps) {
-  const subjects =
-    data.find((s) => s.name === selectedSemester)?.subjects ?? [];
+  const subjects = data.find((s) => s.id === selectedSemester)?.subjects ?? [];
   const date = new Date();
   const defaultSemesterName =
     date.getMonth() < 9
@@ -34,42 +34,45 @@ function Home({
 
   //#region Semesters
   function addSemester(newSemester: string): void {
-    if (newSemester.length < 1 || newSemester.split(" ").length > 1) {
+    if (newSemester.length < 1) {
       alert("Érvénytelen félév név.");
       return;
     }
-    if (data.find((s) => s.name === newSemester)) {
-      alert("Már létezik ilyen félév.");
-      return;
-    }
+    const newId = v4();
     setData(
       (d) =>
         [
           ...d,
-          { name: newSemester, included: true, subjects: [] },
+          { id: newId, name: newSemester, included: true, subjects: [] },
         ] as StoredData
     );
-    changeSemester(newSemester);
+    changeSemester(newId);
   }
 
   function changeSemester(semester: string): void {
     setSelectedSemester(() => semester);
   }
 
-  function deleteSemester(semesterToDelete: string): void {
-    const newData: StoredData = data.filter((s) => s.name !== semesterToDelete);
+  function deleteSemester(semesterIdToDelete: string): void {
+    const newData: StoredData = data.filter((s) => s.id !== semesterIdToDelete);
     setData(() => newData);
     if (newData.length === 0) {
       console.log("No semesters left");
+      const newId = v4();
       setData(
         () =>
           [
             ...newData,
-            { name: defaultSemesterName, included: true, subjects: [] },
+            {
+              id: newId,
+              name: defaultSemesterName,
+              included: true,
+              subjects: [],
+            },
           ] as StoredData
       );
-      changeSemester(defaultSemesterName);
-    } else changeSemester(newData[0].name);
+      changeSemester(newId);
+    } else changeSemester(newData[0].id);
   }
 
   function moveSemester(fromIndex: number, toIndex: number): void {
@@ -79,15 +82,27 @@ function Home({
     newData.splice(toIndex, 0, data[fromIndex]);
     setData(() => newData);
   }
-  //#endregion Semesters
 
-  //#region Subjects
-  function toggleSemesterIncluded(semester: string): void {
-    setData((d) =>
-      d.map((s) => (s.name === semester ? { ...s, included: !s.included } : s))
+  function toggleSemesterIncluded(semesterId: string): void {
+    setData(
+      (d) =>
+        d.map((s) =>
+          s.id === semesterId ? { ...s, included: !s.included } : s
+        ) as StoredData
     );
   }
 
+  function onUpdateSemesterName(semesterId: string, name: string): void {
+    setData(
+      (d) =>
+        d.map((s) =>
+          s.id === semesterId ? { ...s, name: name } : s
+        ) as StoredData
+    );
+  }
+  //#endregion Semesters
+
+  //#region Subjects
   function updateSemesterSubjects(
     subjects: Subject[],
     semester: string = selectedSemester
@@ -95,7 +110,7 @@ function Home({
     setData(
       (d) =>
         d.map((s) =>
-          s.name === semester ? { ...s, subjects: subjects } : s
+          s.id === semester ? { ...s, subjects: subjects } : s
         ) as StoredData
     );
   }
@@ -139,6 +154,7 @@ function Home({
         onAddSemester={addSemester}
         onChangeSelectedSemester={changeSemester}
         onToggleSemesterIncluded={toggleSemesterIncluded}
+        onUpdateSemesterName={onUpdateSemesterName}
         onDeleteSemester={deleteSemester}
         onMoveSemester={moveSemester}
       />
