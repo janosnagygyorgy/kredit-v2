@@ -25,10 +25,6 @@ function SemesterSelect({
   const addSemesterInput = useRef<HTMLInputElement>(null);
   const [active, setActive] = useState(true);
 
-  function handleSemesterChange(semester: string) {
-    onChangeSelectedSemester(semester);
-  }
-
   return (
     <div className="w-5/6 max-w-lg p-2 border-1 border-solid rounded-md bg-shadow">
       <div className="mb-2 p-1 border-1 border-solid rounded-md">
@@ -60,7 +56,7 @@ function SemesterSelect({
                       <div
                         onClick={(e) => {
                           if (!(e.target instanceof HTMLInputElement))
-                            handleSemesterChange(option.name);
+                            onChangeSelectedSemester(option.name);
                         }}
                         className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing ${
                           option.name === selectedSemester

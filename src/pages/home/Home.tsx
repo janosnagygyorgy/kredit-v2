@@ -83,8 +83,11 @@ function Home({
 
   //#region Subjects
   function toggleSemesterIncluded(semester: string): void {
-    setData((d) =>
-      d.map((s) => (s.name === semester ? { ...s, included: !s.included } : s))
+    setData(
+      (d) =>
+        d.map((s) =>
+          s.name === semester ? { ...s, included: !s.included } : s
+        ) as StoredData
     );
   }
 
