@@ -3,7 +3,7 @@ import type { StoredData } from "interfaces/StoredData";
 import type CalculatorService from "services/CalculatorService";
 import SubjectList from "./components/SubjectList/SubjectList";
 import StatisticsDisplay from "./components/StatisticsDisplay";
-import SemesterSelect from "./components/SemesterSelect";
+import SemesterList from "./components/SemesterList/SemesterList";
 import { v4 } from "uuid";
 
 interface HomeProps {
@@ -148,7 +148,7 @@ function Home({
 
   return (
     <>
-      <SemesterSelect
+      <SemesterList
         options={data.map((s) => s)}
         selectedSemester={selectedSemester}
         onAddSemester={addSemester}
