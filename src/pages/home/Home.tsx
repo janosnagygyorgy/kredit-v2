@@ -35,12 +35,8 @@ function Home({
 
   //#region Semesters
   function addSemester(newSemester: string): void {
-    if (newSemester.length < 1 || newSemester.split(" ").length > 1) {
+    if (newSemester.length < 1) {
       alert("Érvénytelen félév név.");
-      return;
-    }
-    if (data.find((s) => s.name === newSemester)) {
-      alert("Már létezik ilyen félév.");
       return;
     }
     setData(
@@ -88,11 +84,20 @@ function Home({
   //#endregion Semesters
 
   //#region Subjects
-  function toggleSemesterIncluded(semester: string): void {
+  function toggleSemesterIncluded(semesterId: string): void {
     setData(
       (d) =>
         d.map((s) =>
-          s.name === semester ? { ...s, included: !s.included } : s
+          s.id === semesterId ? { ...s, included: !s.included } : s
+        ) as StoredData
+    );
+  }
+
+  function onUpdateSemesterName(semesterId: string, name: string): void {
+    setData(
+      (d) =>
+        d.map((s) =>
+          s.id === semesterId ? { ...s, name: name } : s
         ) as StoredData
     );
   }
@@ -148,6 +153,7 @@ function Home({
         onAddSemester={addSemester}
         onChangeSelectedSemester={changeSemester}
         onToggleSemesterIncluded={toggleSemesterIncluded}
+        onUpdateSemesterName={onUpdateSemesterName}
         onDeleteSemester={deleteSemester}
         onMoveSemester={moveSemester}
       />

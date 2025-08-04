@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import type { DraggableItem } from "components/DragDropList/DraggableItem";
 import DragDropList from "components/DragDropList/DragDropList";
 import type { Semester } from "interfaces/Semester";
+import SemesterListItem from "./SemesterListItem";
 
 interface SemesterSelectProps {
   options: Semester[];
@@ -9,6 +10,7 @@ interface SemesterSelectProps {
   onAddSemester: (newSemester: string) => void;
   onChangeSelectedSemester: (selectedSemester: string) => void;
   onToggleSemesterIncluded: (semester: string) => void;
+  onUpdateSemesterName: (semesterId: string, name: string) => void;
   onDeleteSemester: (semesterToDelete: string) => void;
   onMoveSemester: (fromIndex: number, toIndex: number) => void;
 }
@@ -19,6 +21,7 @@ function SemesterSelect({
   onAddSemester,
   onChangeSelectedSemester,
   onToggleSemesterIncluded,
+  onUpdateSemesterName,
   onDeleteSemester,
   onMoveSemester,
 }: SemesterSelectProps) {
@@ -53,26 +56,13 @@ function SemesterSelect({
                   ({
                     key: option.id,
                     children: (
-                      <div
-                        onClick={(e) => {
-                          if (!(e.target instanceof HTMLInputElement))
-                            onChangeSelectedSemester(option.name);
-                        }}
-                        className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing ${
-                          option.name === selectedSemester
-                            ? "bg-primary text-link-text"
-                            : "bg-highlight"
-                        }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={option.included}
-                          onChange={() => {
-                            onToggleSemesterIncluded(option.name);
-                          }}
-                        />
-                        {option.name}
-                      </div>
+                      <SemesterListItem
+                        semester={option}
+                        isSelected={option.name === selectedSemester}
+                        onChangeSelectedSemester={onChangeSelectedSemester}
+                        onToggleSemesterIncluded={onToggleSemesterIncluded}
+                        onUpdateSemesterName={onUpdateSemesterName}
+                      />
                     ),
                   } as DraggableItem)
               )}
