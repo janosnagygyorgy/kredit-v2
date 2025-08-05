@@ -62,7 +62,7 @@ function SubjectListItem({
         type="number"
         min={0}
         value={subjectState.credit.toString()}
-        className="w-8"
+        className="w-9"
         onChange={handleCreditChange}
       />
       <input
@@ -70,7 +70,7 @@ function SubjectListItem({
         min={1}
         max={5}
         value={subjectState.grade.toString()}
-        className="w-8"
+        className="w-9"
         onChange={handleGradeChange}
       />
       <input
