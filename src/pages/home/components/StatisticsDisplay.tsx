@@ -6,8 +6,8 @@ interface StatisticsDisplayProps {
 
 function StatisticsDisplay({ calculatorService }: StatisticsDisplayProps) {
   return (
-    <div>
-      <div className="border-1 border-solid rounded-md p-2">
+    <div className="flex w-full max-w-2xl mt-2 ml-0 lg:block lg:w-auto lg:mt-0">
+      <div className="w-full border-1 border-solid rounded-md p-2">
         <h2>Féléves adatok</h2>
         {calculatorService.config["semesterStatistics"].map((item) => {
           return (

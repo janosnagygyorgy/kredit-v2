@@ -29,21 +29,37 @@ function SemesterList({
   const [active, setActive] = useState(true);
 
   return (
-    <div className="w-5/6 max-w-lg p-2 border-1 border-solid rounded-md bg-shadow">
-      <div className="mb-2 p-1 border-1 border-solid rounded-md">
-        <div className="flex flex-wrap items-center p-0.5 rounded-sm select-none">
-          <div
-            className="mx-2 cursor-pointer"
-            onClick={() => setActive(() => !active)}
-          >
-            {options.find((s) => s.id === selectedSemester)?.name ??
-              "" + (active ? "-" : "+")}
+    <div className="w-full max-w-2xl p-2 border-1 border-solid rounded-md bg-shadow">
+      <div className="flex items-center m-0 p-0">
+        <input type="text" className="w-full" ref={addSemesterInput} />
+        <input
+          type="button"
+          value="Félév hozzáadása"
+          className="bg-success text-white border-black"
+          onClick={() => {
+            if (!addSemesterInput.current) return;
+            onAddSemester(addSemesterInput.current.value);
+            addSemesterInput.current.value = "";
+          }}
+        />
+      </div>
+      <div className="mt-2 p-1 border-1 border-solid rounded-md">
+        <div
+          className="h-10 flex flex-wrap items-center p-0.5 rounded-sm select-none cursor-pointer"
+          onClick={() => setActive(() => !active)}
+        >
+          <div className="mx-2">
+            {(options.find((s) => s.id === selectedSemester)?.name ?? "") +
+              (active ? "-" : "+")}
           </div>
-          <input
-            type="button"
-            value="Félév törlése"
-            onClick={() => onDeleteSemester(selectedSemester)}
-          />
+          {!active && (
+            <input
+              type="button"
+              value="Félév törlése"
+              className="text-white border-black bg-warning"
+              onClick={() => onDeleteSemester(selectedSemester)}
+            />
+          )}
         </div>
         <div
           className="grid transition-all duration-300 no-global-transition ease-in-out"
@@ -63,6 +79,7 @@ function SemesterList({
                         onChangeSelectedSemester={onChangeSelectedSemester}
                         onToggleSemesterIncluded={onToggleSemesterIncluded}
                         onUpdateSemesterName={onUpdateSemesterName}
+                        onDeleteSemester={onDeleteSemester}
                       />
                     ),
                   } as DraggableItem)
@@ -70,18 +87,6 @@ function SemesterList({
             />
           </div>
         </div>
-      </div>
-      <div className="flex items-center m-0 p-0">
-        <input type="text" className="w-full" ref={addSemesterInput} />
-        <input
-          type="button"
-          value="Félév hozzáadása"
-          onClick={() => {
-            if (!addSemesterInput.current) return;
-            onAddSemester(addSemesterInput.current.value);
-            addSemesterInput.current.value = "";
-          }}
-        />
       </div>
     </div>
   );

@@ -148,17 +148,19 @@ function Home({
 
   return (
     <>
-      <SemesterList
-        options={data.map((s) => s)}
-        selectedSemester={selectedSemester}
-        onAddSemester={addSemester}
-        onChangeSelectedSemester={changeSemester}
-        onToggleSemesterIncluded={toggleSemesterIncluded}
-        onUpdateSemesterName={onUpdateSemesterName}
-        onDeleteSemester={deleteSemester}
-        onMoveSemester={moveSemester}
-      />
-      <div className="flex flex-wrap mt-5">
+      <div className="flex mb-2">
+        <SemesterList
+          options={data.map((s) => s)}
+          selectedSemester={selectedSemester}
+          onAddSemester={addSemester}
+          onChangeSelectedSemester={changeSemester}
+          onToggleSemesterIncluded={toggleSemesterIncluded}
+          onUpdateSemesterName={onUpdateSemesterName}
+          onDeleteSemester={deleteSemester}
+          onMoveSemester={moveSemester}
+        />
+      </div>
+      <div className="lg:flex lg:flex-wrap">
         <SubjectList
           subjects={subjects}
           onAddSubject={addSubject}

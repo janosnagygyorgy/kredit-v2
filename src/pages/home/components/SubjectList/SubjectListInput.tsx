@@ -29,7 +29,7 @@ function SubjectListInput({ onAddSubject }: SubjectListInputProps) {
         type="number"
         min={0}
         value={inputCredit.toString()}
-        className="w-8"
+        className="w-9"
         onChange={(event) => setInputCredit(Number(event.target.value))}
       />
       <input
@@ -37,7 +37,7 @@ function SubjectListInput({ onAddSubject }: SubjectListInputProps) {
         min={1}
         max={5}
         value={inputGrade.toString()}
-        className="w-8"
+        className="w-9"
         onChange={(event) => setInputGrade(Number(event.target.value))}
       />
       <input
