@@ -20,7 +20,6 @@ class StorageService {
   public saveData(data: StoredData, selectedSemester: string): void {
     localStorage.setItem("data", JSON.stringify(data));
     localStorage.setItem("selectedSemester", selectedSemester);
-    console.log(data);
   }
 
   public getConfig(): StoredConfig {
@@ -45,7 +44,6 @@ class StorageService {
 
   public saveConfig(config: StoredConfig): void {
     localStorage.setItem("config", JSON.stringify(config));
-    console.log(config);
   }
 }
 

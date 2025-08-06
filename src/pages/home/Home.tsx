@@ -57,7 +57,6 @@ function Home({
     const newData: StoredData = data.filter((s) => s.id !== semesterIdToDelete);
     setData(() => newData);
     if (newData.length === 0) {
-      console.log("No semesters left");
       const newId = v4();
       setData(
         () =>
