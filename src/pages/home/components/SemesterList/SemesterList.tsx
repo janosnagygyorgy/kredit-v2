@@ -28,6 +28,12 @@ function SemesterList({
   const addSemesterInput = useRef<HTMLInputElement>(null);
   const [active, setActive] = useState(true);
 
+  function handleAddSemester(): void {
+    if (!addSemesterInput.current) return;
+    onAddSemester(addSemesterInput.current.value);
+    addSemesterInput.current.value = "";
+  }
+
   return (
     <div className="w-full p-2 border-1 border-solid rounded-md bg-shadow">
       <div className="flex items-center m-0 p-0">
@@ -35,16 +41,15 @@ function SemesterList({
           type="text"
           className="w-full max-w-100"
           ref={addSemesterInput}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleAddSemester();
+          }}
         />
         <input
           type="button"
           value="Félév hozzáadása"
           className="bg-success text-white border-black"
-          onClick={() => {
-            if (!addSemesterInput.current) return;
-            onAddSemester(addSemesterInput.current.value);
-            addSemesterInput.current.value = "";
-          }}
+          onClick={() => handleAddSemester()}
         />
       </div>
       <div className="mt-2 p-1 border-1 border-solid rounded-md">
