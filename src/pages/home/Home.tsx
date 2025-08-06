@@ -72,7 +72,10 @@ function Home({
           ] as StoredData
       );
       changeSemester(newId);
-    } else changeSemester(newData[0].id);
+    } else {
+      if (semesterIdToDelete === selectedSemester)
+        changeSemester(newData[0].id);
+    }
   }
 
   function moveSemester(fromIndex: number, toIndex: number): void {
@@ -148,7 +151,7 @@ function Home({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="flex w-full mb-3 max-w-7xl">
+      <div className="flex w-full mb-4 max-w-7xl">
         <SemesterList
           options={data.map((s) => s)}
           selectedSemester={selectedSemester}

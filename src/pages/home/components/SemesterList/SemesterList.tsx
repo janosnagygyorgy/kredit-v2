@@ -26,7 +26,7 @@ function SemesterList({
   onMoveSemester,
 }: SemesterListProps) {
   const addSemesterInput = useRef<HTMLInputElement>(null);
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
 
   function handleAddSemester(): void {
     if (!addSemesterInput.current) return;
@@ -39,7 +39,7 @@ function SemesterList({
       <div className="flex items-center m-0 p-0">
         <input
           type="text"
-          className="w-full max-w-100"
+          className="w-full max-w-100 bg-highlight"
           ref={addSemesterInput}
           onKeyDown={(e) => {
             if (e.key === "Enter") handleAddSemester();
@@ -54,13 +54,13 @@ function SemesterList({
       </div>
       <div className="mt-2 p-1 border-1 border-solid rounded-md">
         <div
-          className="flex flex-wrap items-center p-0.5 rounded-sm select-none cursor-pointer"
+          className="grid grid-cols-2 mx-2 p-0.5 rounded-sm font-bold select-none cursor-pointer"
           onClick={() => setActive(() => !active)}
         >
-          <div className="mx-2">
-            {(options.find((s) => s.id === selectedSemester)?.name ?? "") +
-              (active ? "-" : "+")}
+          <div className="flex justify-start">
+            {options.find((s) => s.id === selectedSemester)?.name ?? ""}
           </div>
+          <div className="flex justify-end">{active ? "-" : "+"}</div>
         </div>
         <div
           className="grid transition-all duration-300 no-global-transition ease-in-out"

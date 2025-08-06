@@ -74,6 +74,7 @@ function ImportExport({ data, onImport }: ImportExportProps) {
         <input
           type="button"
           value="Export"
+          className="bg-shadow"
           onClick={() =>
             handleExport(JSON.stringify(data), "export.txt", "text/plain")
           }

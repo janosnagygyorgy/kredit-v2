@@ -24,8 +24,8 @@ function NavigationLink({ to, children }: NavigationLinkProps) {
 
   return (
     <div
-      className={`flex items-center h-8 rounded-lg p-2 mr-1 text-link-text
-        ${isActive ? "bg-primary" : "bg-link-background"}`}
+      className={`flex items-center h-8 rounded-lg p-2 mr-1 text-text border-1
+        ${isActive ? "bg-highlight border-text" : "border-link-highlight"}`}
     >
       <Link to={to}>{children}</Link>
     </div>

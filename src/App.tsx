@@ -80,7 +80,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="px-5 md:px-10 py-2 bg-background">
+      <div className="px-5 md:px-10 py-4 bg-background">
         <Routes>
           <Route
             path="/Home"
