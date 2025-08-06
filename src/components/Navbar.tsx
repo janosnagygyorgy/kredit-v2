@@ -4,7 +4,7 @@ import { Link, useMatch, useResolvedPath } from "react-router-dom";
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="flex p-1">
+      <div className="flex">
         <NavigationLink to="/home">Főoldal</NavigationLink>
         <NavigationLink to="/settings">Beállítások</NavigationLink>
         <NavigationLink to="/help">Súgó</NavigationLink>
@@ -24,7 +24,7 @@ function NavigationLink({ to, children }: NavigationLinkProps) {
 
   return (
     <div
-      className={`rounded-lg p-2 mx-1 text-link-text
+      className={`flex items-center h-8 rounded-lg p-2 mr-1 text-link-text
         ${isActive ? "bg-primary" : "bg-link-background"}`}
     >
       <Link to={to}>{children}</Link>
