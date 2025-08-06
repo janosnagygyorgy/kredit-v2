@@ -39,8 +39,8 @@ function SemesterListItem({
         if (!(e.target instanceof HTMLInputElement))
           onChangeSelectedSemester(semester.id);
       }}
-      className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing ${
-        isSelected ? "bg-primary text-link-text" : "bg-highlight"
+      className={`flex items-center p-1 rounded-sm cursor-pointer active:cursor-grabbing bg-highlight border-1 ${
+        isSelected ? "border-text" : "border-highlight"
       }`}
     >
       <input
@@ -53,13 +53,13 @@ function SemesterListItem({
       <input
         type="text"
         value={semesterName}
-        className="w-1/2 max-w-100"
+        className="w-1/2 max-w-100 bg-shadow"
         onChange={handleNameChange}
       />
       <input
         type="button"
         value="Törlés"
-        className="text-white border-black bg-warning"
+        className="text-white bg-warning"
         onClick={() => onDeleteSemester(semester.id)}
       />
     </div>

@@ -67,11 +67,20 @@ function App() {
   return (
     <div>
       <div className="px-5 md:px-10 py-2 bg-shadow border-b-1">
-        <h1>Kreditindex kalkulátor</h1>
-        <ThemeSelector setTheme={setTheme} />
-        <Navbar />
+        <h1 className="md:hidden">Kreditindex kalkulátor</h1>
+        <div className="grid grid-cols-2 md:grid-cols-3">
+          <div className="flex items-center">
+            <Navbar />
+          </div>
+          <h1 className="hidden md:block text-center">
+            Kreditindex kalkulátor
+          </h1>
+          <div className="flex justify-end items-center">
+            <ThemeSelector setTheme={setTheme} />
+          </div>
+        </div>
       </div>
-      <div className="px-5 md:px-10 py-2 bg-background">
+      <div className="px-5 md:px-10 py-4 bg-background">
         <Routes>
           <Route
             path="/Home"

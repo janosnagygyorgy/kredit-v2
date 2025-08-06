@@ -57,7 +57,6 @@ function Home({
     const newData: StoredData = data.filter((s) => s.id !== semesterIdToDelete);
     setData(() => newData);
     if (newData.length === 0) {
-      console.log("No semesters left");
       const newId = v4();
       setData(
         () =>
@@ -72,7 +71,10 @@ function Home({
           ] as StoredData
       );
       changeSemester(newId);
-    } else changeSemester(newData[0].id);
+    } else {
+      if (semesterIdToDelete === selectedSemester)
+        changeSemester(newData[0].id);
+    }
   }
 
   function moveSemester(fromIndex: number, toIndex: number): void {
@@ -147,8 +149,8 @@ function Home({
   //#endregion Subjects
 
   return (
-    <>
-      <div className="flex mb-2">
+    <div className="flex flex-col items-center">
+      <div className="flex w-full mb-4 max-w-7xl">
         <SemesterList
           options={data.map((s) => s)}
           selectedSemester={selectedSemester}
@@ -160,7 +162,7 @@ function Home({
           onMoveSemester={moveSemester}
         />
       </div>
-      <div className="lg:flex lg:flex-wrap">
+      <div className="flex flex-col lg:flex-row w-full max-w-7xl">
         <SubjectList
           subjects={subjects}
           onAddSubject={addSubject}
@@ -170,7 +172,7 @@ function Home({
         />
         <StatisticsDisplay calculatorService={calculatorService} />
       </div>
-    </>
+    </div>
   );
 }
 

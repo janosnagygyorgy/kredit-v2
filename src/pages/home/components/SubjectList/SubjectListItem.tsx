@@ -46,7 +46,7 @@ function SubjectListItem({
   }, [subjectState]);
 
   return (
-    <div className="flex items-center p-1 border-solid border-1 rounded-md bg-shadow cursor-grab active:cursor-grabbing">
+    <div className="flex items-center p-1 rounded-md bg-highlight cursor-grab active:cursor-grabbing">
       <input
         type="checkbox"
         checked={subjectState.completed}
@@ -55,14 +55,14 @@ function SubjectListItem({
       <input
         type="text"
         value={subjectState.name}
-        className="w-full"
+        className="w-full bg-shadow"
         onChange={handleNameChange}
       />
       <input
         type="number"
         min={0}
         value={subjectState.credit.toString()}
-        className="w-9"
+        className="w-9 bg-shadow"
         onChange={handleCreditChange}
       />
       <input
@@ -70,7 +70,7 @@ function SubjectListItem({
         min={1}
         max={5}
         value={subjectState.grade.toString()}
-        className="w-9"
+        className="w-9 bg-shadow"
         onChange={handleGradeChange}
       />
       <input

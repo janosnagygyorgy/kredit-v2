@@ -5,12 +5,9 @@
 @theme {
   --color-background: hsl(60, 17%, 98%);
   --color-text: hsl(0, 0%, 0%);
-  --color-primary: hsl(15, 63%, 60%);
-
-  --color-link-text: hsl(0, 0%, 100%);
-  --color-link-background: hsl(15, 63%, 70%);
 
   --color-shadow: hsl(0, 0%, 95%);
+  --color-link-highlight: hsl(0, 0%, 70%);
   --color-highlight: hsl(0, 0%, 88%);
 
   --color-success: hsl(134, 41%, 40%);
@@ -30,15 +27,14 @@ body {
   @variant dark {
     --color-background: hsl(0, 0%, 18%);
     --color-text: hsl(0, 0%, 83%);
-    --color-primary: hsl(15, 63%, 40%);
-
-    --color-link-background: hsl(15, 63%, 60%);
 
     --color-shadow: hsl(0, 0%, 14%);
+    --color-link-highlight: hsl(0, 0%, 40%);
     --color-highlight: hsl(0, 0%, 21%);
   }
 }
 
+body:not(.no-transition),
 body:not(.no-transition) *:not(.no-global-transition) {
   @apply transition-colors duration-400;
 }
@@ -56,7 +52,7 @@ h3 {
 }
 
 input {
-  @apply border-solid border-1 m-0.5 p-1 rounded-sm;
+  @apply m-0.5 p-1 rounded-sm;
 }
 
 input[type="button"],

@@ -4,14 +4,16 @@ interface ThemeSelectorProps {
 
 function ThemeSelector({ setTheme }: ThemeSelectorProps) {
   return (
-    <div>
-      <input
-        type="button"
-        value="☀️Világos"
-        onClick={() => setTheme("light")}
-      />
-      <input type="button" value="🌙Sötét" onClick={() => setTheme("dark")} />
-      <input type="button" value="💻Alap" onClick={() => setTheme("system")} />
+    <div className="flex items-center h-8 p-1.5 border-1 border-solid rounded-lg">
+      <div className="cursor-pointer" onClick={() => setTheme("light")}>
+        ☀️
+      </div>
+      <div className="mx-1 cursor-pointer" onClick={() => setTheme("dark")}>
+        🌙
+      </div>
+      <div className="cursor-pointer" onClick={() => setTheme("system")}>
+        💻
+      </div>
     </div>
   );
 }
