@@ -147,8 +147,8 @@ function Home({
   //#endregion Subjects
 
   return (
-    <>
-      <div className="flex mb-2">
+    <div className="flex flex-col items-center">
+      <div className="flex w-full mb-3 max-w-7xl">
         <SemesterList
           options={data.map((s) => s)}
           selectedSemester={selectedSemester}
@@ -160,7 +160,7 @@ function Home({
           onMoveSemester={moveSemester}
         />
       </div>
-      <div className="lg:flex lg:flex-wrap">
+      <div className="flex flex-col lg:flex-row w-full max-w-7xl">
         <SubjectList
           subjects={subjects}
           onAddSubject={addSubject}
@@ -170,7 +170,7 @@ function Home({
         />
         <StatisticsDisplay calculatorService={calculatorService} />
       </div>
-    </>
+    </div>
   );
 }
 

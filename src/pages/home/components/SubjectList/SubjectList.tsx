@@ -20,7 +20,7 @@ function SubjectList({
   onMoveSubject,
 }: SubjectListProps) {
   return (
-    <div className="w-full max-w-2xl p-2 lg:mr-2 border-1 border-solid rounded-md">
+    <div className="w-full lg:w-2/3 mb-3 lg:mb-0 mr-0 lg:mr-3 p-2 border-1 border-solid rounded-md">
       <SubjectListInput onAddSubject={onAddSubject} />
       <div className="px-2 py-0 border-solid border-1 rounded-md">
         <DragDropList
