@@ -53,10 +53,6 @@ function App() {
   }
 
   useEffect(() => {
-    document.body.classList.remove("no-transition");
-  }, []);
-
-  useEffect(() => {
     storageService.saveData(data, selectedSemester);
   }, [data, selectedSemester]);
 

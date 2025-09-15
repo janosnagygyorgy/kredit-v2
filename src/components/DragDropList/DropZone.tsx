@@ -18,7 +18,7 @@ function DropZone({ index, handleOnDrop }: DropZoneProps) {
       onDragOver={(e) => e.preventDefault()}
       className={`flex items-center justify-center text-xs m-0.5
         border-dashed border-1 rounded-sm select-none
-        transition-all duration-100 no-global-transition ease-in-out
+        transition-all duration-100 ease-in-out
         ${isDraggedOver ? "h-5" : "h-1.5 opacity-0"}`}
     >
       Áthelyezés
