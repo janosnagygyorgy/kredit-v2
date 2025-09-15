@@ -10,6 +10,7 @@ import Settings from "./pages/settings/Settings";
 import Help from "./pages/help/Help";
 import Navbar from "./components/Navbar";
 import ThemeSelector from "components/ThemeSelector";
+import "App.css";
 
 function App() {
   const storageService = new StorageService();
@@ -64,7 +65,7 @@ function App() {
     <div>
       <div className="px-5 md:px-10 py-2 bg-shadow">
         <h1 className="md:hidden">Kreditindex kalkulátor</h1>
-        <div className="grid grid-cols-2 md:grid-cols-3 items-center">
+        <div className="flex flex-row flex-wrap xs:grid xs:grid-cols-2 md:grid-cols-3 items-center">
           <div className="flex my-2 justify-start">
             <Navbar />
           </div>
