@@ -24,9 +24,9 @@ function Home({
   const subjects = data.find((s) => s.id === selectedSemester)?.subjects ?? [];
   const date = new Date();
   const defaultSemesterName =
-    date.getMonth() < 9
+    date.getMonth() < 8
       ? `${date.getFullYear() - 1}/${date.getFullYear().toString().slice(-2)}/${
-          date.getMonth() < 2 ? 1 : 2
+          date.getMonth() < 1 ? 1 : 2
         }`
       : `${date.getFullYear()}/${(date.getFullYear() + 1)
           .toString()
