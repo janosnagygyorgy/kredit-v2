@@ -9,11 +9,21 @@ class StorageService {
 
   public getData(): StoredData {
     const data = localStorage.getItem("data");
+    const date = new Date();
+    const defaultSemesterName =
+      date.getMonth() < 8
+        ? `${date.getFullYear() - 1}/${date
+            .getFullYear()
+            .toString()
+            .slice(-2)}/${date.getMonth() < 1 ? 1 : 2}`
+        : `${date.getFullYear()}/${(date.getFullYear() + 1)
+            .toString()
+            .slice(-2)}/1`;
     if (!data)
       return [
-        { id: v4(), name: "Semester1", included: true, subjects: [] },
-        { id: v4(), name: "Semester2", included: true, subjects: [] },
+        { id: v4(), name: defaultSemesterName, included: true, subjects: [] },
       ];
+
     return JSON.parse(data);
   }
 

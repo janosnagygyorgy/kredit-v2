@@ -23,7 +23,7 @@ function SubjectList({
     <div className="w-full lg:w-2/3 mb-4 lg:mb-0 mr-0 lg:mr-4 p-2 bg-shadow border-1 border-solid rounded-md">
       <SubjectListInput onAddSubject={onAddSubject} />
       {subjects.length > 0 && (
-        <div className="px-2 py-0 border-solid border-1 rounded-md">
+        <div className="py-0 rounded-md">
           <DragDropList
             onMoveItem={onMoveSubject}
             items={subjects.map(

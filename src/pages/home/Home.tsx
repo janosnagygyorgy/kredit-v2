@@ -24,9 +24,9 @@ function Home({
   const subjects = data.find((s) => s.id === selectedSemester)?.subjects ?? [];
   const date = new Date();
   const defaultSemesterName =
-    date.getMonth() < 9
+    date.getMonth() < 8
       ? `${date.getFullYear() - 1}/${date.getFullYear().toString().slice(-2)}/${
-          date.getMonth() < 2 ? 1 : 2
+          date.getMonth() < 1 ? 1 : 2
         }`
       : `${date.getFullYear()}/${(date.getFullYear() + 1)
           .toString()
@@ -149,8 +149,8 @@ function Home({
   //#endregion Subjects
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex w-full mb-4 max-w-7xl">
+    <>
+      <div className="flex w-full mb-4">
         <SemesterList
           options={data.map((s) => s)}
           selectedSemester={selectedSemester}
@@ -172,7 +172,7 @@ function Home({
         />
         <StatisticsDisplay calculatorService={calculatorService} />
       </div>
-    </div>
+    </>
   );
 }
 
