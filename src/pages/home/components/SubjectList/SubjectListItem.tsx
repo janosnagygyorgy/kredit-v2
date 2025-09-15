@@ -55,14 +55,14 @@ function SubjectListItem({
       <input
         type="text"
         value={subjectState.name}
-        className="w-full bg-shadow"
+        className="w-3/4 bg-shadow"
         onChange={handleNameChange}
       />
       <input
         type="number"
         min={0}
         value={subjectState.credit.toString()}
-        className="w-9 bg-shadow"
+        className="w-15 bg-shadow"
         onChange={handleCreditChange}
       />
       <input
@@ -70,13 +70,13 @@ function SubjectListItem({
         min={1}
         max={5}
         value={subjectState.grade.toString()}
-        className="w-9 bg-shadow"
+        className="w-10 bg-shadow"
         onChange={handleGradeChange}
       />
       <input
         type="button"
         value="Törlés"
-        className="w-15 text-white border-black bg-warning"
+        className="w-20 text-white border-black bg-warning"
         onClick={() => onDeleteSubject(subject.id)}
       />
     </div>
