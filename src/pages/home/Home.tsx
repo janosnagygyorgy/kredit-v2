@@ -149,8 +149,8 @@ function Home({
   //#endregion Subjects
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex w-full mb-4 max-w-7xl">
+    <>
+      <div className="flex w-full mb-4">
         <SemesterList
           options={data.map((s) => s)}
           selectedSemester={selectedSemester}
@@ -172,7 +172,7 @@ function Home({
         />
         <StatisticsDisplay calculatorService={calculatorService} />
       </div>
-    </div>
+    </>
   );
 }
 

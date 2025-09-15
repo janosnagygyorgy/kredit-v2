@@ -4,7 +4,7 @@ interface ThemeSelectorProps {
 
 function ThemeSelector({ setTheme }: ThemeSelectorProps) {
   return (
-    <div className="flex items-center h-8 p-1.5 border-1 border-solid rounded-lg">
+    <div className="flex items-center h-8 p-1.5 border-1 border-solid border-link-highlight rounded-lg">
       <div className="cursor-pointer" onClick={() => setTheme("light")}>
         ☀️
       </div>

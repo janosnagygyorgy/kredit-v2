@@ -66,48 +66,50 @@ function App() {
 
   return (
     <div>
-      <div className="px-5 md:px-10 py-2 bg-shadow border-b-1">
+      <div className="px-5 md:px-10 py-2 bg-shadow">
         <h1 className="md:hidden">Kreditindex kalkulátor</h1>
-        <div className="grid grid-cols-2 md:grid-cols-3">
-          <div className="flex items-center">
+        <div className="grid grid-cols-2 md:grid-cols-3 items-center">
+          <div className="flex my-2 justify-start">
             <Navbar />
           </div>
           <h1 className="hidden md:block text-center">
             Kreditindex kalkulátor
           </h1>
-          <div className="flex justify-end items-center">
+          <div className="flex justify-end">
             <ThemeSelector setTheme={setTheme} />
           </div>
         </div>
       </div>
-      <div className="px-5 md:px-10 py-4 bg-background">
-        <Routes>
-          <Route
-            path="/Home"
-            element={
-              <Home
-                data={data}
-                setData={setData}
-                selectedSemester={selectedSemester}
-                setSelectedSemester={setSelectedSemester}
-                calculatorService={calculatorService}
-              />
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <Settings
-                data={data}
-                onImport={handleImport}
-                calculatorService={calculatorService}
-                toggleSetting={toggleSetting}
-              />
-            }
-          />
-          <Route path="/help" element={<Help />} />
-          <Route path="*" element={<Navigate replace to="/home" />} />
-        </Routes>
+      <div className="flex flex-col items-center w-full px-5 md:px-10 py-4 bg-background">
+        <div className="w-full max-w-6xl">
+          <Routes>
+            <Route
+              path="/Home"
+              element={
+                <Home
+                  data={data}
+                  setData={setData}
+                  selectedSemester={selectedSemester}
+                  setSelectedSemester={setSelectedSemester}
+                  calculatorService={calculatorService}
+                />
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <Settings
+                  data={data}
+                  onImport={handleImport}
+                  calculatorService={calculatorService}
+                  toggleSetting={toggleSetting}
+                />
+              }
+            />
+            <Route path="/help" element={<Help />} />
+            <Route path="*" element={<Navigate replace to="/home" />} />
+          </Routes>
+        </div>
       </div>
       <Analytics />
     </div>
