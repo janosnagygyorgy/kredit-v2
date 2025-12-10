@@ -16,6 +16,14 @@ function App() {
   const storageService = new StorageService();
   const [config, setConfig] = useState(storageService.getConfig());
   const [data, setData] = useState(storageService.getData());
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const darkMode =
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("dark", darkMode);
+    return darkMode;
+  });
   const [selectedSemester, setSelectedSemester] = useState(
     storageService.getSelectedSemester() ?? data[0].id
   );
@@ -36,21 +44,12 @@ function App() {
   }
 
   function setTheme(theme: string): void {
-    switch (theme) {
-      case "light":
-      case "dark":
-        localStorage.theme = theme;
-        break;
-      default:
-        localStorage.removeItem("theme");
-        break;
-    }
-    document.documentElement.classList.toggle(
-      "dark",
-      localStorage.theme === "dark" ||
-        (!("theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-    );
+    setIsDarkMode(() => {
+      const darkMode = theme === "dark";
+      localStorage.theme = theme;
+      document.documentElement.classList.toggle("dark", darkMode);
+      return darkMode;
+    });
   }
 
   useEffect(() => {
@@ -73,7 +72,7 @@ function App() {
             Kreditindex kalkulátor
           </h1>
           <div className="flex justify-end">
-            <ThemeSelector setTheme={setTheme} />
+            <ThemeSelector isDarkMode={isDarkMode} setTheme={setTheme} />
           </div>
         </div>
       </div>

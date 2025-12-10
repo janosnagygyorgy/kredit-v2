@@ -76,7 +76,11 @@ function ImportExport({ data, onImport }: ImportExportProps) {
           value="Export"
           className="bg-shadow"
           onClick={() =>
-            handleExport(JSON.stringify(data), "export.txt", "text/plain")
+            handleExport(
+              JSON.stringify(data),
+              "export.json",
+              "application/json"
+            )
           }
         />
       </div>
